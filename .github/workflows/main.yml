@@ -22,19 +22,19 @@ jobs:
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
       
-      - name: Build and check pkg
-#         if: ${{ env.cancelJob == 'false' }}
-        id: makepkg
-        uses: edlanglois/pkgbuild-action@v1
-        with:
-          pkgdir: "${{ matrix.pkgName }}"
-          makepkgArgs: "--printsrcinfo"
+#       - name: Build and check pkg
+# #         if: ${{ env.cancelJob == 'false' }}
+#         id: makepkg
+#         uses: edlanglois/pkgbuild-action@v1
+#         with:
+#           pkgdir: "${{ matrix.pkgName }}"
+#           makepkgArgs: "--printsrcinfo"
       
-      - name: Upload archive
-#         if: ${{ env.cancelJob == 'false' }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ steps.makepkg.outputs.pkgfile0 }}
+#       - name: Upload archive
+# #         if: ${{ env.cancelJob == 'false' }}
+#         uses: actions/upload-artifact@v2
+#         with:
+#           path: ${{ steps.makepkg.outputs.pkgfile0 }}
     
 #       - name: Create and push .SRCINFO
 #         run: |
@@ -46,9 +46,20 @@ jobs:
 #           git commit -m "Add .SRCINFO"
 #           git push
       
-
-      - name: Build and check pkg
-        if: ${{ env.cancelJob == 'false' }}
-        uses: edlanglois/pkgbuild-action@v1
+      - name: Build pkg
+        uses: ouuan/pkgbuild-action@master
+        id: build
         with:
-          pkgdir: "${{ matrix.pkgName }}"
+          path: "${{ matrix.pkgName }}"
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkgname-${{ github.run_id }}
+          path: ${{ steps.build.outputs.pkgfile }}
+
+#       - name: Build and check pkg
+#         if: ${{ env.cancelJob == 'false' }}
+#         uses: edlanglois/pkgbuild-action@v1
+#         with:
+#           pkgdir: "${{ matrix.pkgName }}"
