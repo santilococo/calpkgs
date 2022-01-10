@@ -19,7 +19,6 @@ jobs:
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "cancelJob=true" >> $GITHUB_ENV
-          echo ${{ env.cancelJob }}
 
       - name: Build and Check
         if: ${{ env.cancelJob == 'false' }}
@@ -28,7 +27,7 @@ jobs:
 #         with:
 #           pkgdir: "zaread"
       
-      - if: failure()
+      - if: ${{ env.cancelJob == 'true' }}
         run: echo "zaread was not updated"
   libxft-bgra:
     runs-on: ubuntu-latest
