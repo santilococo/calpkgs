@@ -54,7 +54,7 @@ jobs:
 
       - name: Makepkg build, check and generate .SRCINFO
 #         if: ${{ env.cancelJob == 'false' }}
-        id: makepkg
+        id: bcg
         uses: santilococo/pkgbuild-action@v1.1.7
         with:
           pkgdir: "${{ matrix.pkgName }}"
@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: .SRCINFO
-          path: ${{ steps.build.outputs.srcInfo }}
+          path: ${{ steps.bcg.outputs.srcInfo }}
 
 #       - name: Build and check pkg
 #         if: ${{ env.cancelJob == 'false' }}
