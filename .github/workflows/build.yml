@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       cancelJob: false
-      testVar: false
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,9 +19,6 @@ jobs:
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "{cancelJob}=true" >> $GITHUB_ENV
-          env.testVar=true
-          echo env.testVar
-          echo ${{ env.testVar }}
           echo ${{ env.cancelJob }}
 
       - name: Build and Check
