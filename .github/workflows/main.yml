@@ -23,20 +23,13 @@ jobs:
           git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
-#         if: ${{ env.cancelJob == 'false' }}
+        if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
-#        id: bcg
         with:
           pkgdir: "${{ matrix.pkgName }}"
-          
-#       - name: Upload Artifacts
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: SRCINFO-${{ matrix.pkgName }}
-#           path: ${{ steps.bcg.outputs.srcInfo }}
-          
+       
       - name: Push .SRCINFO
-#         if: ${{ env.cancelJob == 'false' }}
+        if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
