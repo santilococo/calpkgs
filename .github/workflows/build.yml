@@ -20,21 +20,26 @@ jobs:
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "cancelJob=true" >> $GITHUB_ENV
 
-      - name: Build and Check
+      - name: Build and check pkg
         if: ${{ env.cancelJob == 'false' }}
-        run: echo "zaread was updated"
-#         uses: edlanglois/pkgbuild-action@v1
-#         with:
-#           pkgdir: "zaread"
-      
-      - if: ${{ env.cancelJob == 'true' }}
-        run: echo "zaread was not updated"
+        uses: edlanglois/pkgbuild-action@v1
+        with:
+          pkgdir: "zaread"
   libxft-bgra:
     runs-on: ubuntu-latest
+    env:
+      cancelJob: false
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      
+      - name: Check modified files
+        run: |
+          git diff --name-only HEAD HEAD^ | grep -q "libxft-bgra" || echo "cancelJob=true" >> $GITHUB_ENV
 
-#       - name: Build and Check
-#         uses: edlanglois/pkgbuild-action@v1
-#         with:
-#           pkgdir: "libxft-bgra"
+      - name: Build and check pkg
+        if: ${{ env.cancelJob == 'false' }}
+        uses: edlanglois/pkgbuild-action@v1
+        with:
+          pkgdir: "libxft-bgra"
