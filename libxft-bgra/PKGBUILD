@@ -11,8 +11,8 @@ groups=('modified')
 provides=('libxft')
 conflicts=('libxft')
 url="https://gitlab.freedesktop.org/xorg/lib/libxft/-/archive/libXft-${pkgver}/libxft-libXft-${pkgver}.tar.gz"
-depends=('fontconfig' 'libxrender' 'xorg-util-macros')
-makedepends=('git' 'pkgconf')
+depends=('fontconfig' 'libxrender')
+makedepends=('git' 'pkgconf' 'xorg-util-macros')
 source=("${pkgname}-${pkgver}.tar.gz::$url" "bgra-patch::https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch")
 md5sums=('SKIP' 'SKIP')
 
