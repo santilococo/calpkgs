@@ -18,14 +18,14 @@ md5sums=('SKIP' 'SKIP')
 
 
 build() {
-    cd "$srcdir/${pkgname}-${pkgver}"
+    cd "$srcdir/libxft-libXft-${pkgver}"
     patch -p1 < "$srcdir/bgra-patch"
     sh autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
     make
 }
 
 package() {
-    cd "$srcdir/${pkgname}-${pkgver}"
+    cd "$srcdir/libxft-libXft-${pkgver}"
     make DESTDIR="${pkgdir}" install
     install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
     install -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/"
