@@ -9,6 +9,9 @@ on:
 jobs:
   zaread:
     runs-on: ubuntu-latest
+    env:
+      cancelJob: false
+      testVar: false
     steps:
       - uses: actions/checkout@v2
         with:
@@ -16,10 +19,14 @@ jobs:
       
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | grep -q "zaread" || exit 1
+          git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "{cancelJob}=true" >> $GITHUB_ENV
+          env.testVar=true
+          echo env.testVar
+          echo ${{ env.testVar }}
+          echo ${{ env.cancelJob }}
 
       - name: Build and Check
-        if: success()
+        if: ${{ env.cancelJob == 'false' }}
         uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: "zaread"
