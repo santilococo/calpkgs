@@ -46,17 +46,24 @@ jobs:
 #           git commit -m "Add .SRCINFO"
 #           git push
       
-      - name: Build pkg
-        uses: ouuan/pkgbuild-action@master
-        id: build
+#       - name: Build pkg
+#         uses: ouuan/pkgbuild-action@master
+#         id: build
+#         with:
+#           path: "${{ matrix.pkgName }}"
+
+      - name: Makepkg build, check and generate .SRCINFO
+#         if: ${{ env.cancelJob == 'false' }}
+        id: makepkg
+        uses: santilococo/pkgbuild-action@v1.1.7
         with:
-          path: "${{ matrix.pkgName }}"
+          pkgdir: "${{ matrix.pkgName }}"
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: pkgname-${{ github.run_id }}
-          path: ${{ steps.build.outputs.pkgfile }}
+          name: .SRCINFO
+          path: ${{ steps.build.outputs.srcInfo }}
 
 #       - name: Build and check pkg
 #         if: ${{ env.cancelJob == 'false' }}
