@@ -21,6 +21,31 @@ jobs:
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
+      
+      - name: Build and check pkg
+#         if: ${{ env.cancelJob == 'false' }}
+        id: makepkg
+        uses: edlanglois/pkgbuild-action@v1
+        with:
+          pkgdir: "${{ matrix.pkgName }}"
+          makepkgArgs: "--printsrcinfo"
+      
+      - name: Upload archive
+#         if: ${{ env.cancelJob == 'false' }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ steps.makepkg.outputs.pkgfile0 }}
+    
+#       - name: Create and push .SRCINFO
+#         run: |
+#           git config --local user.name "$(git log --format=%an | head -n 1)"
+#           git config --local user.email "$(git log --format=%ae | head -n 1)"
+#           cd ${{ matrix.pkgName }} || exit 1
+#           makepkg --printsrcinfo > .SRCINFO
+#           git add .SRCINFO
+#           git commit -m "Add .SRCINFO"
+#           git push
+      
 
       - name: Build and check pkg
         if: ${{ env.cancelJob == 'false' }}
