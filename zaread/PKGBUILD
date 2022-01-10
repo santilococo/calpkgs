@@ -18,9 +18,9 @@ sha256sums=('SKIP'
             'daaabcb0c7728947567ecad716c6abdb55b2fb04cd7b5db9f600311748f56f39')
 
 prepare() {
-  cd "${srcdir}/"
-  patch -p1 < "markdown.patch"
-  patch -p1 < "cache.patch"
+  cd "${srcdir}/${_pkgname}"
+  patch -p1 < "${srcdir}/markdown.patch"
+  patch -p1 < "${srcdir}/cache.patch"
 }
 
 package() {
