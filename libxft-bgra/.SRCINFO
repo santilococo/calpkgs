@@ -1,0 +1,21 @@
+pkgbase = libxft-bgra
+	pkgdesc = libXft with BGRA glyph rendering and scaling patches by Maxime Coste
+	pkgver = 2.3.4
+	pkgrel = 1
+	url = https://gitlab.freedesktop.org/xorg/lib/libxft/-/archive/libXft-2.3.4/libxft-libXft-2.3.4.tar.gz
+	arch = x86_64
+	groups = modified
+	license = custom
+	makedepends = git
+	makedepends = pkgconf
+	makedepends = xorg-util-macros
+	depends = fontconfig
+	depends = libxrender
+	provides = libxft
+	conflicts = libxft
+	source = libxft-bgra-2.3.4.tar.gz::https://gitlab.freedesktop.org/xorg/lib/libxft/-/archive/libXft-2.3.4/libxft-libXft-2.3.4.tar.gz
+	source = bgra-patch::https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch
+	md5sums = SKIP
+	md5sums = SKIP
+
+pkgname = libxft-bgra
