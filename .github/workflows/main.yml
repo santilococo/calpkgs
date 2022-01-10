@@ -7,10 +7,16 @@ on:
     branches: [ master ]
 
 jobs:
-  zaread:
+  allPackages:
     runs-on: ubuntu-latest
     env:
       cancelJob: false
+    strategy:
+      fail-fast: false
+      matrix:
+        pkgName:
+          - zaread
+          - libxft-bgra
     steps:
       - uses: actions/checkout@v2
         with:
@@ -18,28 +24,10 @@ jobs:
       
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "cancelJob=true" >> $GITHUB_ENV
+          git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
 
       - name: Build and check pkg
         if: ${{ env.cancelJob == 'false' }}
         uses: edlanglois/pkgbuild-action@v1
         with:
-          pkgdir: "zaread"
-  libxft-bgra:
-    runs-on: ubuntu-latest
-    env:
-      cancelJob: false
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-      
-      - name: Check modified files
-        run: |
-          git diff --name-only HEAD HEAD^ | grep -q "libxft-bgra" || echo "cancelJob=true" >> $GITHUB_ENV
-
-      - name: Build and check pkg
-        if: ${{ env.cancelJob == 'false' }}
-        uses: edlanglois/pkgbuild-action@v1
-        with:
-          pkgdir: "libxft-bgra"
+          pkgdir: "${{ matrix.pkgName }}"
