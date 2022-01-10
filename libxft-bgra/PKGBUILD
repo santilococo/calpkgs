@@ -11,7 +11,8 @@ provides=('libxft')
 conflicts=('libxft')
 depends=('fontconfig' 'libxrender')
 makedepends=('pkgconf')
-source=("https://xorg.freedesktop.org/releases/individual/lib/libXft-${pkgver}.tar.gz{,.sig}" 
+source=("https://xorg.freedesktop.org/releases/individual/lib/libXft-${pkgver}.tar.gz"
+        "https://xorg.freedesktop.org/releases/individual/lib/libXft-${pkgver}.tar.gz.sig"
         "bgra-patch::${url}/merge_requests/1.patch")
 sha256sums=('1eca71bec9cb483165ce1ab94f5cd3036269f5268651df6a2d99c4a7ab644d79' 
             'SKIP'
