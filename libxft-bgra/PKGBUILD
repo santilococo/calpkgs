@@ -1,3 +1,5 @@
+# Maintainer: Santiago Lo Coco <santilococo.01@gmail.com>
+
 _pkgbasever=2.3.4
 pkgname=libxft-bgra
 pkgver=2.3.4
