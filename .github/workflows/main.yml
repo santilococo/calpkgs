@@ -69,9 +69,20 @@ jobs:
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
+          ls ${{ matrix.pkgName }}
+          echo "----"
           git status
-          mv .SRCINFO ${{ matrix.pkgName }}
-          git status
+          echo "----"
+          cat .SRCINFO
+          echo "----"
+          cat ${{ matrix.pkgName }}/.SRCINFO
+          echo "----"
+          diff .SRCINFO ${{ matrix.pkgName }}
+          echo "----"
+          if [ $? -eq 1 ]; then
+            mv .SRCINFO ${{ matrix.pkgName }}
+            git status
+          fi
 #          git add ${{ matrix.pkgName }}/.SRCINFO
 #          git pull
 #          git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
