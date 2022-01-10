@@ -59,11 +59,11 @@ jobs:
         with:
           pkgdir: "${{ matrix.pkgName }}"
           
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: SRCINFO-${{ matrix.pkgName }}
-          path: ${{ steps.bcg.outputs.srcInfo }}
+#       - name: Upload Artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: SRCINFO-${{ matrix.pkgName }}
+#           path: ${{ steps.bcg.outputs.srcInfo }}
           
       - name: Push .SRCINFO
         run: |
@@ -71,8 +71,10 @@ jobs:
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           git log
           git status
-          git add ${{ steps.bcg.outputs.srcInfo }}
-          git commit -m "Add/update .SRCINFO"
+          mv .SRCINFO ${{ matrix.pkgName }}
+          git add .SRCINFO
+          git pull
+          git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
           git push
 
 #       - name: Build and check pkg
