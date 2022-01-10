@@ -11,21 +11,23 @@ groups=('modified')
 provides=('libxft')
 conflicts=('libxft')
 url="https://gitlab.freedesktop.org/xorg/lib/libxft/-/archive/libXft-${pkgver}/libxft-libXft-${pkgver}.tar.gz"
-depends=('fontconfig' 'libxrender' 'curl' 'xorg-util-macros')
+depends=('fontconfig' 'libxrender')
 makedepends=('git' 'pkgconf')
-source=("$url" "https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch")
+source=("${pkgname}-${pkgver}::$url" "bgra-patch::https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch")
 md5sums=('SKIP' 'SKIP')
 
 
 build() {
-    cd libxft-libXft-${pkgver}
-    patch -p1 < ../1.patch
+    #cd libxft-libXft-${pkgver}
+    cd ${pkgname}-${pkgver}
+    patch -p1 < "$srcdir/bgra-patch"
     sh autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
     make
 }
 
 package() {
-    cd libxft-libXft-${pkgver}
+    #cd libxft-libXft-${pkgver}
+    cd ${pkgname}-${pkgver}
     make DESTDIR="${pkgdir}" install
     install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
     install -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/"
