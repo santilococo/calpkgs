@@ -22,40 +22,10 @@ jobs:
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
       
-#       - name: Build and check pkg
-# #         if: ${{ env.cancelJob == 'false' }}
-#         id: makepkg
-#         uses: edlanglois/pkgbuild-action@v1
-#         with:
-#           pkgdir: "${{ matrix.pkgName }}"
-#           makepkgArgs: "--printsrcinfo"
-      
-#       - name: Upload archive
-# #         if: ${{ env.cancelJob == 'false' }}
-#         uses: actions/upload-artifact@v2
-#         with:
-#           path: ${{ steps.makepkg.outputs.pkgfile0 }}
-    
-#       - name: Create and push .SRCINFO
-#         run: |
-#           git config --local user.name "$(git log --format=%an | head -n 1)"
-#           git config --local user.email "$(git log --format=%ae | head -n 1)"
-#           cd ${{ matrix.pkgName }} || exit 1
-#           makepkg --printsrcinfo > .SRCINFO
-#           git add .SRCINFO
-#           git commit -m "Add .SRCINFO"
-#           git push
-      
-#       - name: Build pkg
-#         uses: ouuan/pkgbuild-action@master
-#         id: build
-#         with:
-#           path: "${{ matrix.pkgName }}"
-
       - name: Makepkg build, check and generate .SRCINFO
 #         if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
-        id: bcg
+#        id: bcg
         with:
           pkgdir: "${{ matrix.pkgName }}"
           
@@ -66,30 +36,17 @@ jobs:
 #           path: ${{ steps.bcg.outputs.srcInfo }}
           
       - name: Push .SRCINFO
+#         if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          ls ${{ matrix.pkgName }}
-          echo "----"
-          git status
-          echo "----"
-          cat .SRCINFO
-          echo "----"
-          cat ${{ matrix.pkgName }}/.SRCINFO
-          echo "----"
-          diff .SRCINFO ${{ matrix.pkgName }}
-          echo "----"
-          if [ $? -eq 1 ]; then
-            mv .SRCINFO ${{ matrix.pkgName }}
-            git status
+          msg="Update" && [ -f ${{ matrix.pkgName }/.SRCINFO ] || msg="Add"
+          diff .SRCINFO ${{ matrix.pkgName }}/.SRCINFO > /dev/null 2>&1
+          [ $? -eq 0 ] && exit 0
+          mv .SRCINFO ${{ matrix.pkgName }}
+          if [ ! -z "$(git status --porcelain)" ]; then
+            git add ${{ matrix.pkgName }}/.SRCINFO
+            git pull
+            git commit -m "$msg ${{ matrix.pkgName }}/.SRCINFO"
+            git push
           fi
-#          git add ${{ matrix.pkgName }}/.SRCINFO
-#          git pull
-#          git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
-#          git push
-
-#       - name: Build and check pkg
-#         if: ${{ env.cancelJob == 'false' }}
-#         uses: edlanglois/pkgbuild-action@v1
-#         with:
-#           pkgdir: "${{ matrix.pkgName }}"
