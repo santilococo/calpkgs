@@ -18,14 +18,15 @@ jobs:
       
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "{cancelJob}=true" >> $GITHUB_ENV
+          git diff --name-only HEAD HEAD^ | grep -q "zaread" || echo "cancelJob=true" >> $GITHUB_ENV
           echo ${{ env.cancelJob }}
 
       - name: Build and Check
         if: ${{ env.cancelJob == 'false' }}
-        uses: edlanglois/pkgbuild-action@v1
-        with:
-          pkgdir: "zaread"
+        run: echo "zaread was updated"
+#         uses: edlanglois/pkgbuild-action@v1
+#         with:
+#           pkgdir: "zaread"
       
       - if: failure()
         run: echo "zaread was not updated"
