@@ -1,0 +1,19 @@
+pkgbase = zaread-git
+	pkgdesc = A (very) lightweight MS Office file reader
+	pkgver = 1.0
+	pkgrel = 1
+	url = https://github.com/paoloap/zaread
+	arch = any
+	license = GPL
+	makedepends = git
+	depends = zathura
+	provides = zaread
+	conflicts = zaread
+	source = git+https://github.com/paoloap/zaread.git
+	source = markdown.patch::https://github.com/paoloap/zaread/pull/2.patch
+	source = cache.patch::https://github.com/paoloap/zaread/pull/4.patch
+	sha256sums = SKIP
+	sha256sums = a672ca390255a51b99f44998ae6c9955db5caea6051ccf1aef0610b1d00bc1e4
+	sha256sums = daaabcb0c7728947567ecad716c6abdb55b2fb04cd7b5db9f600311748f56f39
+
+pkgname = zaread-git
