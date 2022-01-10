@@ -72,10 +72,10 @@ jobs:
           git status
           mv .SRCINFO ${{ matrix.pkgName }}
           git status
-          git add ${{ matrix.pkgName }}/.SRCINFO
-          git pull
-          git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
-          git push
+#          git add ${{ matrix.pkgName }}/.SRCINFO
+#          git pull
+#          git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
+#          git push
 
 #       - name: Build and check pkg
 #         if: ${{ env.cancelJob == 'false' }}
