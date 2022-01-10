@@ -64,6 +64,16 @@ jobs:
         with:
           name: SRCINFO-${{ matrix.pkgName }}
           path: ${{ steps.bcg.outputs.srcInfo }}
+          
+      - name: Push .SRCINFO
+        run: |
+          git config --local user.name "$(git log --format=%an | head -n 1)"
+          git config --local user.email "$(git log --format=%ae | head -n 1)"
+          git log
+          git status
+          git add ${{ steps.bcg.outputs.srcInfo }}
+          git commit -m "Add/update .SRCINFO"
+          git push
 
 #       - name: Build and check pkg
 #         if: ${{ env.cancelJob == 'false' }}
