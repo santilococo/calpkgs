@@ -69,10 +69,10 @@ jobs:
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          git log
           git status
           mv .SRCINFO ${{ matrix.pkgName }}
-          git add .SRCINFO
+          git status
+          git add ${{ matrix.pkgName }}/.SRCINFO
           git pull
           git commit -m "Add/update .SRCINFO of ${{ matrix.pkgName }}"
           git push
