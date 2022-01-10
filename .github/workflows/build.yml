@@ -16,8 +16,6 @@ jobs:
       
       - name: Check modified files
         run: |
-          git log
-          git diff --name-only HEAD HEAD~1
           git diff --name-only HEAD HEAD^ | grep -q "zaread" || exit 1
 
       - name: Build and Check
@@ -25,6 +23,9 @@ jobs:
         uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: "zaread"
+      
+      - if: failure()
+        run: echo "zaread was not updated"
   libxft-bgra:
     runs-on: ubuntu-latest
     steps:
