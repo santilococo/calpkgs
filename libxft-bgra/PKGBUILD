@@ -13,7 +13,7 @@ conflicts=('libxft')
 url="https://gitlab.freedesktop.org/xorg/lib/libxft/-/archive/libXft-${pkgver}/libxft-libXft-${pkgver}.tar.gz"
 depends=('fontconfig' 'libxrender')
 makedepends=('git' 'pkgconf')
-source=("${pkgname}-${pkgver}::$url" "bgra-patch::https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch")
+source=("${pkgname}-${pkgver}.tar.gz::$url" "bgra-patch::https://gitlab.freedesktop.org/xorg/lib/libxft/merge_requests/1.patch")
 md5sums=('SKIP' 'SKIP')
 
 
