@@ -36,7 +36,6 @@ jobs:
 #           path: ${{ steps.bcg.outputs.srcInfo }}
           
       - name: Push .SRCINFO
-#         if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
