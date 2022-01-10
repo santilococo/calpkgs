@@ -54,8 +54,8 @@ jobs:
 
       - name: Makepkg build, check and generate .SRCINFO
 #         if: ${{ env.cancelJob == 'false' }}
-        id: bcg
         uses: santilococo/pkgbuild-action@v1.1.7
+        id: bcg
         with:
           pkgdir: "${{ matrix.pkgName }}"
           
