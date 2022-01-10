@@ -10,16 +10,16 @@ license=('custom')
 provides=('libxft')
 conflicts=('libxft')
 depends=('fontconfig' 'libxrender')
-# makedepends=('git' 'pkgconf' 'xorg-util-macros')
 makedepends=('pkgconf')
-source=("${pkgname}-${pkgver}.tar.gz::${url}/-/archive/libXft-${pkgver}/libxft-libXft-${pkgver}.tar.gz" "bgra-patch::${url}/merge_requests/1.patch")
-sha256sums=('218440012b95647ebff041939a565c0e1e67df1c6c21f8ef21250ba6c997a023' '0e313ab2eccd7d2f68fc2d409493dd972de9cbe70510c4eb707ad16f8ed6f03e')
+source=("${pkgname}-${pkgver}.tar.gz::https://xorg.freedesktop.org/releases/individual/lib/libXft-${pkgver}.tar.gz{,.sig}" 
+        "bgra-patch::${url}/merge_requests/1.patch")
+sha256sums=('218440012b95647ebff041939a565c0e1e67df1c6c21f8ef21250ba6c997a023' 
+            '0e313ab2eccd7d2f68fc2d409493dd972de9cbe70510c4eb707ad16f8ed6f03e')
 
 build() {
     cd "${srcdir}/libxft-libXft-${pkgver}"
     patch -p1 < "${srcdir}/bgra-patch"
-    # sh autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
-    sh autogen.sh --prefix=/usr --sysconfdir=/etc --disable-static
+    sh configure --prefix=/usr --sysconfdir=/etc --disable-static
     make
 }
 
