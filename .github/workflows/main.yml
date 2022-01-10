@@ -40,12 +40,12 @@ jobs:
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          msg="Update" && [ -f ${{ matrix.pkgName }/.SRCINFO ] || msg="Add"
+          msg="Update" && [ -f "${{ matrix.pkgName }}/.SRCINFO" ] || msg="Add"
           diff .SRCINFO "${{ matrix.pkgName }}/.SRCINFO" > /dev/null 2>&1
           [ $? -eq 0 ] && exit 0
-          mv .SRCINFO ${{ matrix.pkgName }}
+          mv .SRCINFO "${{ matrix.pkgName }}"
           if [ ! -z "$(git status --porcelain)" ]; then
-            git add ${{ matrix.pkgName }}/.SRCINFO
+            git add "${{ matrix.pkgName }}/.SRCINFO"
             git pull
             git commit -m "$msg ${{ matrix.pkgName }}/.SRCINFO"
             git push
