@@ -7,6 +7,7 @@ arch=("any")
 url="https://github.com/paoloap/zaread"
 license=("GPL")
 depends=("zathura" "libreoffice" "pandoc")
+makedepends=("git")
 provides=("zaread")
 conflicts=("zaread")
 source=('git+https://github.com/paoloap/zaread.git' 'markdown.patch::https://github.com/paoloap/zaread/pull/2.patch' 'cache.patch::https://github.com/paoloap/zaread/pull/4.patch')
