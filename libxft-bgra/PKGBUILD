@@ -19,7 +19,7 @@ build() {
     cd "${srcdir}/libxft-libXft-${pkgver}"
     patch -p1 < "${srcdir}/bgra-patch"
     # sh autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
-    ./configure --prefix=/usr --sysconfdir=/etc --disable-static
+    sh autogen.sh --prefix=/usr --sysconfdir=/etc --disable-static
     make
 }
 
