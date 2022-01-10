@@ -8,22 +8,25 @@ on:
 
 jobs:
   zaread:
-    if: ${{ git diff --name-only HEAD HEAD^ | grep -q "zaread" }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Check modified files
+        run: |
+          git diff --name-only HEAD HEAD^ | grep -q "zaread" || exit 1
 
       - name: Build and Check
+        if: success()
         uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: "zaread"
   libxft-bgra:
-    if: ${{ git diff --name-only HEAD HEAD^ | grep -q "libxft-bgra" }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build and Check
-        uses: edlanglois/pkgbuild-action@v1
-        with:
-          pkgdir: "libxft-bgra"
+#       - name: Build and Check
+#         uses: edlanglois/pkgbuild-action@v1
+#         with:
+#           pkgdir: "libxft-bgra"
