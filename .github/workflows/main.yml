@@ -54,7 +54,12 @@ jobs:
           echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
           chmod 0400 $HOME/.ssh/aur
           ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
-
+          cat $HOME/.ssh/aur.pub
+          ssh-add -L
+          eval $(ssh-agent)
+          ssh-add -L
+          echo ${{ secrets.AUR_SSH_PASSPHRASE }} | ssh-add -p $HOME/.ssh/aur
+          
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
