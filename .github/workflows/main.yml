@@ -75,7 +75,6 @@ jobs:
           rm -rf ${{ env.pkgName }}
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
-            msg="Add PKGBUILD and .SRCINFO"
             git commit -m "$msg"
             git push --set-upstream ${{ env.pkgName }} ${{ env.pkgName }}:master
           fi
