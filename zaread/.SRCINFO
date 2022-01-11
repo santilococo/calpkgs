@@ -6,6 +6,7 @@ pkgbase = zaread-git
 	arch = any
 	license = GPL
 	makedepends = git
+	depends = bash
 	provides = zaread
 	conflicts = zaread
 	source = git+https://github.com/paoloap/zaread.git
