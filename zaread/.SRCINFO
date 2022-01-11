@@ -1,12 +1,11 @@
 pkgbase = zaread-git
-	pkgdesc = A (very) lightweight MS Office file reader
-	pkgver = 1.0
+	pkgdesc = A (very) lightweight MS Office file reader.
+	pkgver = r13.4a59a78
 	pkgrel = 1
 	url = https://github.com/paoloap/zaread
 	arch = any
 	license = GPL
 	makedepends = git
-	depends = zathura
 	provides = zaread
 	conflicts = zaread
 	source = git+https://github.com/paoloap/zaread.git
