@@ -20,7 +20,6 @@ jobs:
           echo "aurDeps=$aurDeps" >> $GITHUB_ENV
           inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f3)
           echo "inAur=$inAur" >> $GITHUB_ENV
-          echo "NAME: " $pkgName "AURDEPS: " $aurDeps "inAUR: " $inAur
           
       - uses: actions/checkout@v2
         with:
