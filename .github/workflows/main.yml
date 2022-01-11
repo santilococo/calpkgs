@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         pkgName:
-#          - zaread
+          - zaread
           - libxft-bgra
     steps:
       - uses: actions/checkout@v2
@@ -43,22 +43,17 @@ jobs:
           fi
        
       - name: Push to AUR
-#        if: ${{ env.cancelJob == 'false' }}
+        if: ${{ env.cancelJob == 'false' }}
         run: |
-        
-          if [ ! -d $HOME/.ssh ] ; then
-            mkdir -m 0700 $HOME/.ssh
-          fi
-
+          [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
           ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
           echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
           chmod 0400 $HOME/.ssh/aur
           ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
           eval $(ssh-agent)
           echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
-          ssh-add -L
-          #echo ${{ secrets.AUR_SSH_PASSPHRASE }} | ssh-add -p $HOME/.ssh/aur
           
+          msg="git log --format=%s | head -n 1"
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
@@ -72,8 +67,6 @@ jobs:
           rm -rf ${{ matrix.pkgName }}
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "Update ${{ matrix.pkgName }}"
-            git push --set-upstream libxft-bgra libxft-bgra:master
+            git commit -m "$msg"
+            git push --set-upstream ${{ matrix.pkgName }} ${{ matrix.pkgName }}:master
           fi
-#          msg="git log --format=%s | head -n 1"
-#          git commit -m "$msg"
