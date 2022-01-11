@@ -15,9 +15,9 @@ jobs:
           - holehe-git
  #         - libxft-bgra
         aurDeps:
-          - ''
+ #         - ''
           - 1
-          - ''
+ #         - ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -73,6 +73,7 @@ jobs:
           rm -rf ${{ matrix.pkgName }}
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
+            msg="Add PKGBUILD and .SRCINFO"
             git commit -m "$msg"
             git push --set-upstream ${{ matrix.pkgName }} ${{ matrix.pkgName }}:master
           fi
