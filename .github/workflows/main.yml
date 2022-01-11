@@ -11,9 +11,13 @@ jobs:
       fail-fast: false
       matrix:
         pkgName:
-          - holehe-git
 #          - zaread
+          - holehe-git
  #         - libxft-bgra
+        aurDeps:
+          - ''
+          - 1
+          - ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -28,6 +32,7 @@ jobs:
         uses: santilococo/pkgbuild-action@master
         with:
           pkgdir: "${{ matrix.pkgName }}"
+          aurDeps: "${{ matrix.aurDeps }}"
        
       - name: Push .SRCINFO
         if: ${{ env.cancelJob == 'false' }}
