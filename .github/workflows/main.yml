@@ -11,8 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         pkgName:
-          - zaread
-          - libxft-bgra
+          - holehe-git
+#          - zaread
+ #         - libxft-bgra
     steps:
       - uses: actions/checkout@v2
         with:
@@ -60,7 +61,7 @@ jobs:
           git checkout --orphan ${{ matrix.pkgName }}
           git rm -rf .
           git remote add ${{ matrix.pkgName }} ssh://aur@aur.archlinux.org/${{ matrix.pkgName }}.git
-          git pull ${{ matrix.pkgName }} master
+          set +e; git pull ${{ matrix.pkgName }} master; set -e
           git checkout master ${{ matrix.pkgName }}
           mv ${{ matrix.pkgName }}/PKGBUILD .
           mv ${{ matrix.pkgName }}/.SRCINFO .
