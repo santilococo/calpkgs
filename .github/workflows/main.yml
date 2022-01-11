@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         pkgName:
-          - zaread
+#          - zaread
           - libxft-bgra
     steps:
       - uses: actions/checkout@v2
@@ -45,9 +45,19 @@ jobs:
       - name: Push to AUR
 #        if: ${{ env.cancelJob == 'false' }}
         run: |
+        
+          if [ ! -d $HOME/.ssh ] ; then
+            mkdir -m 0700 $HOME/.ssh
+          fi
+
+          ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
+          echo "${{ AUR_SSH_KEY }}" > $HOME/.ssh/aur
+          chmod 0400 $HOME/.ssh/aur
+          ssh-keygen -vy -f $HOME/.ssh/aur > $HOME/.ssh/aur.pub
+
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-
+          
           git checkout --orphan ${{ matrix.pkgName }}
           git rm -rf .
           git remote add ${{ matrix.pkgName }} ssh://aur@aur.archlinux.org/${{ matrix.pkgName }}.git
