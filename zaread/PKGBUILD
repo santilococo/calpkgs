@@ -1,29 +1,35 @@
 # Maintainer: Santiago Lo Coco <santilococo.01@gmail.com>
 
 _pkgname="zaread"
-pkgname="$_pkgname-git"
-pkgdesc="A (very) lightweight MS Office file reader"
+pkgname="${_pkgname}-git"
+pkgver=1.0
+pkgrel=1
+pkgdesc="A (very) lightweight MS Office file reader."
 arch=("any")
 url="https://github.com/paoloap/zaread"
 license=("GPL")
-depends=("zathura")
 makedepends=("git")
 provides=("zaread")
 conflicts=("zaread")
-source=("git+${url}.git" "markdown.patch::${url}/pull/2.patch" "cache.patch::${url}/pull/4.patch")
-pkgver=1.0
-pkgrel=1
+source=("git+${url}.git" 
+        "markdown.patch::${url}/pull/2.patch" 
+        "cache.patch::${url}/pull/4.patch")
 sha256sums=('SKIP'
             'a672ca390255a51b99f44998ae6c9955db5caea6051ccf1aef0610b1d00bc1e4'
             'daaabcb0c7728947567ecad716c6abdb55b2fb04cd7b5db9f600311748f56f39')
 
+pkgver() {
+    cd "${srcdir}/${_pkgname}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
 prepare() {
-  cd "${srcdir}/${_pkgname}"
-  patch -p1 < "${srcdir}/markdown.patch"
-  patch -p1 < "${srcdir}/cache.patch"
+    cd "${srcdir}/${_pkgname}"
+    patch -p1 < "${srcdir}/markdown.patch"
+    patch -p1 < "${srcdir}/cache.patch"
 }
 
 package() {
   cd "${srcdir}/${_pkgname}"
-  install -Dm755 "${_pkgname}" "$pkgdir/usr/bin/${_pkgname}"
+  install -Dm755 "${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
 }
