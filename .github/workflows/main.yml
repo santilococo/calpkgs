@@ -41,3 +41,25 @@ jobs:
             git commit -m "$msg ${{ matrix.pkgName }}/.SRCINFO"
             git push
           fi
+       
+      - name: Push to AUR
+#        if: ${{ env.cancelJob == 'false' }}
+        run: |
+          git config --local user.name "$(git log --format=%an | head -n 1)"
+          git config --local user.email "$(git log --format=%ae | head -n 1)"
+
+          git checkout --orphan ${{ matrix.pkgName }}
+          git rm -rf .
+          git remote add ${{ matrix.pkgName }} ssh://aur@aur.archlinux.org/${{ matrix.pkgName }}.git
+          git pull ${{ matrix.pkgName }} master
+          git checkout master ${{ matrix.pkgName }}
+          mv ${{ matrix.pkgName }}/PKGBUILD .
+          mv ${{ matrix.pkgName }}/.SRCINFO .
+          rm -rf ${{ matrix.pkgName }}
+          if [ ! -z "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Update ${{ matrix.pkgName }}"
+            git push --set-upstream libxft-bgra libxft-bgra:master
+          fi
+#          msg="git log --format=%s | head -n 1"
+#          git commit -m "$msg"
