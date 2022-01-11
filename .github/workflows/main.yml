@@ -55,7 +55,6 @@ jobs:
           chmod 0400 $HOME/.ssh/aur
           ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
           eval $(ssh-agent)
-          ssh-add -L
           echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
           ssh-add -L
           #echo ${{ secrets.AUR_SSH_PASSPHRASE }} | ssh-add -p $HOME/.ssh/aur
