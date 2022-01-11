@@ -10,41 +10,49 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgName: ['zaread', 'holehe-git', 'libxft-bgra']
-        aurDeps: ['', '1', '']
-        inAur: ['N', 'Y', 'Y']        
+        pkgInfo: ['zaread||N', 'holehe-git|1|Y', 'libxft-bgra||Y']    
     steps:
+      - name: Set env variables
+        run: |
+          pkgName=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f1)
+          echo "pkgName=$pkgName" >> $GITHUB_ENV
+          aurDeps=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
+          echo "aurDeps=$aurDeps" >> $GITHUB_ENV
+          inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f3)
+          echo "inAur=$inAur" >> $GITHUB_ENV
+          echo "NAME: " $pkgName "AURDEPS: " $aurDeps "inAUR: " $inAur
+          
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
       
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | grep -q "${{ matrix.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
+          git diff --name-only HEAD HEAD^ | grep -q "${{ env.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
         if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
         with:
-          pkgdir: "${{ matrix.pkgName }}"
-          aurDeps: "${{ matrix.aurDeps }}"
+          pkgdir: "${{ env.pkgName }}"
+          aurDeps: "${{ env.aurDeps }}"
        
       - name: Push .SRCINFO
         if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          msg="Update" && [ -f "${{ matrix.pkgName }}/.SRCINFO" ] || msg="Add"
-          mv .SRCINFO "${{ matrix.pkgName }}"
+          msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
+          mv .SRCINFO "${{ env.pkgName }}"
           if [ ! -z "$(git status --porcelain)" ]; then
-            git add "${{ matrix.pkgName }}/.SRCINFO"
+            git add "${{ env.pkgName }}/.SRCINFO"
             git pull
-            git commit -m "$msg ${{ matrix.pkgName }}/.SRCINFO"
+            git commit -m "$msg ${{ env.pkgName }}/.SRCINFO"
             git push
           fi
        
       - name: Push to AUR
-        if: ${{ env.cancelJob == 'false' && matrix.inAur == 'Y' }}
+        if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
         run: |
           [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
           ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
@@ -58,17 +66,17 @@ jobs:
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
-          git checkout --orphan ${{ matrix.pkgName }}
+          git checkout --orphan ${{ env.pkgName }}
           git rm -rf .
-          git remote add ${{ matrix.pkgName }} ssh://aur@aur.archlinux.org/${{ matrix.pkgName }}.git
-          set +e; git pull ${{ matrix.pkgName }} master; set -e
-          git checkout master ${{ matrix.pkgName }}
-          mv ${{ matrix.pkgName }}/PKGBUILD .
-          mv ${{ matrix.pkgName }}/.SRCINFO .
-          rm -rf ${{ matrix.pkgName }}
+          git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
+          set +e; git pull ${{ env.pkgName }} master; set -e
+          git checkout master ${{ env.pkgName }}
+          mv ${{ env.pkgName }}/PKGBUILD .
+          mv ${{ env.pkgName }}/.SRCINFO .
+          rm -rf ${{ env.pkgName }}
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
             msg="Add PKGBUILD and .SRCINFO"
             git commit -m "$msg"
-            git push --set-upstream ${{ matrix.pkgName }} ${{ matrix.pkgName }}:master
+            git push --set-upstream ${{ env.pkgName }} ${{ env.pkgName }}:master
           fi
