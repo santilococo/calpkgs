@@ -65,6 +65,10 @@ jobs:
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
+          cat ${{ env.pkgName }}/.SRCINFO
+          git pull
+          cat ${{ env.pkgName }}/.SRCINFO
+          
           git checkout --orphan ${{ env.pkgName }}
           git rm -rf .
           git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
