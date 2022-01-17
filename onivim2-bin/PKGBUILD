@@ -22,7 +22,6 @@ package() {
     install -Dm644 Onivim2.desktop "${pkgdir}/usr/share/applications/Onivim2.desktop"
     install -Dm644 Onivim2.png "${pkgdir}/usr/share/pixmaps/Onivim2.png"
     cp -Lr {AppRun,usr} "${pkgdir}/opt/${_pkgname}"
-    # ln -s "${pkgdir}/opt/${_pkgname}/AppRun" "${pkgdir}/usr/bin/Oni2"
     install -Dm755 "${pkgdir}/opt/${_pkgname}/AppRun" "${pkgdir}/usr/bin/Oni2"
 }
 
