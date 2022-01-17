@@ -11,7 +11,7 @@ license=('MIT')
 provides=('onivim2')
 conflicts=('onivim2')
 source=("${url}/releases/download/v${pkgver}/AppDir.tar")
-sha256sums=('')
+sha256sums=('73aded7f47dfd766d4dcc368f254e375cc033bf9c51b0aafc3298bfdfc2b63e0')
 
 package() {
     cd "${srcdir}/_release/Onivim2.AppDir"
