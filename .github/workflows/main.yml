@@ -29,6 +29,8 @@ jobs:
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "${{ env.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
+          ls -al
+          ls -al ${{ env.pkgName }}
       
       - name: Makepkg build, check and generate .SRCINFO
         #if: ${{ env.cancelJob == 'false' }}
