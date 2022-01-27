@@ -48,7 +48,7 @@ jobs:
           if [ ! -z "$(git status --porcelain)" ]; then
             git add "${{ env.pkgName }}/.SRCINFO"
             git pull
-            git commit -m "${{ msg }} ${{ env.pkgName }}/.SRCINFO"
+            git commit -m "${{ env.msg }} ${{ env.pkgName }}/.SRCINFO"
             git push
             echo "srcModified=true" >> $GITHUB_ENV
           fi
