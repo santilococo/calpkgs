@@ -31,18 +31,21 @@ jobs:
           git diff --name-only HEAD HEAD^ | grep -q "${{ env.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+        #if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
         with:
           pkgdir: "${{ env.pkgName }}"
           aurDeps: "${{ env.aurDeps }}"
        
       - name: Push .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+        #if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
+          ls -al
+          ls -al ${{ env.pkgName }}
           msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
+          echo "$msg"
           mv .SRCINFO "${{ env.pkgName }}"
           if [ ! -z "$(git status --porcelain)" ]; then
             git add "${{ env.pkgName }}/.SRCINFO"
@@ -52,32 +55,32 @@ jobs:
             echo "srcModified=true" >> $GITHUB_ENV
           fi
        
-      - name: Push to AUR
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
-        run: |
-          [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
-          ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
-          echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
-          chmod 0400 $HOME/.ssh/aur
-          ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
-          eval $(ssh-agent)
-          echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
+#       - name: Push to AUR
+#         if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
+#         run: |
+#           [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
+#           ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
+#           echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
+#           chmod 0400 $HOME/.ssh/aur
+#           ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
+#           eval $(ssh-agent)
+#           echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
           
-          git pull
-          msg="$(git log --format=%s | sed -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
-          git config --local user.name "$(git log --format=%an | head -n 1)"
-          git config --local user.email "$(git log --format=%ae | head -n 1)"
+#           git pull
+#           msg="$(git log --format=%s | sed -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
+#           git config --local user.name "$(git log --format=%an | head -n 1)"
+#           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
-          git checkout --orphan ${{ env.pkgName }}
-          git rm -rf .
-          git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
-          set +e; git pull ${{ env.pkgName }} master; set -e
-          git checkout master ${{ env.pkgName }}
-          mv ${{ env.pkgName }}/PKGBUILD .
-          mv ${{ env.pkgName }}/.SRCINFO .
-          rm -rf ${{ env.pkgName }}
-          if [ ! -z "$(git status --porcelain)" ]; then
-            git add .
-            git commit -m "$msg"
-            git push --set-upstream ${{ env.pkgName }} ${{ env.pkgName }}:master
-          fi
+#           git checkout --orphan ${{ env.pkgName }}
+#           git rm -rf .
+#           git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
+#           set +e; git pull ${{ env.pkgName }} master; set -e
+#           git checkout master ${{ env.pkgName }}
+#           mv ${{ env.pkgName }}/PKGBUILD .
+#           mv ${{ env.pkgName }}/.SRCINFO .
+#           rm -rf ${{ env.pkgName }}
+#           if [ ! -z "$(git status --porcelain)" ]; then
+#             git add .
+#             git commit -m "$msg"
+#             git push --set-upstream ${{ env.pkgName }} ${{ env.pkgName }}:master
+#           fi
