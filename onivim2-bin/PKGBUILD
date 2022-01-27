@@ -17,26 +17,16 @@ sha256sums=('SKIP'
             'SKIP')
 
 package() {
-    # cd "${srcdir}/_release/Onivim2.AppDir"
+    cd "${srcdir}/_release/Onivim2.AppDir"
 
-    # install -dm755 "${pkgdir}/opt/${_pkgname}"
-    # install -dm755 "${pkgdir}/usr/bin/"
-    # install -Dm644 EULA.md "${pkgdir}/usr/share/licenses/${_pkgname}"
-    # install -Dm644 Onivim2.desktop "${pkgdir}/usr/share/applications/Onivim2.desktop"
-    # install -Dm644 Onivim2.png "${pkgdir}/usr/share/pixmaps/Onivim2.png"
-    # cp -Lr {AppRun,usr} "${pkgdir}/opt/${_pkgname}"
-    # install -Dm755 "${pkgdir}/opt/${_pkgname}/AppRun" "${pkgdir}/usr/bin/Oni2"
-    install -dm755 "${pkgdir}"/opt/onivim2
-    install -dm755 "${pkgdir}"/usr/bin/
-#     install -Dm644 ${pkgname}/Outrun-Labs-EULA-v1.1.md "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.txt
-
-#     cd ${pkgname}/_release/
-    cd "${srcdir}/_release"
-    install -Dm644 Onivim2.AppDir/Onivim2.desktop "${pkgdir}"/usr/share/applications/Onivim2.desktop
-    install -Dm644 Onivim2.AppDir/Onivim2.png "${pkgdir}"/usr/share/pixmaps/Onivim2.png
-    cp -Lr Onivim2.AppDir/{AppRun,usr} "${pkgdir}"/opt/onivim2
-    cp -r "${srcdir}"/AppCache/camomile "${pkgdir}"/opt/onivim2/usr/share
-    ln -s /opt/onivim2/AppRun "${pkgdir}"/usr/bin/Oni2
+    install -dm755 "${pkgdir}/opt/${_pkgname}"
+    install -dm755 "${pkgdir}/usr/bin/"
+    install -Dm644 EULA.md "${pkgdir}/usr/share/licenses/${_pkgname}"
+    install -Dm644 Onivim2.desktop "${pkgdir}/usr/share/applications/Onivim2.desktop"
+    install -Dm644 Onivim2.png "${pkgdir}/usr/share/pixmaps/Onivim2.png"
+    cp -Lr Onivim2.AppDir/{AppRun,usr} "${pkgdir}/opt/onivim2"
+    cp -r "${srcdir}/AppCache/camomile" "${pkgdir}/opt/onivim2/usr/share"
+    ln -s /opt/onivim2/AppRun "${pkgdir}/usr/bin/Oni2"
     find "${pkgdir}" -type f -exec chmod 644 {} \;
     chmod 755 "${pkgdir}"/opt/onivim2/AppRun \
         "${pkgdir}"/opt/onivim2/usr/bin/{Oni2*,node,rg} \
