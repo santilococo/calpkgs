@@ -28,7 +28,7 @@ package() {
     # install -Dm755 "${pkgdir}/opt/${_pkgname}/AppRun" "${pkgdir}/usr/bin/Oni2"
     install -dm755 "${pkgdir}"/opt/onivim2
     install -dm755 "${pkgdir}"/usr/bin/
-    install -Dm644 ${pkgname}/Outrun-Labs-EULA-v1.1.md "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.txt
+#     install -Dm644 ${pkgname}/Outrun-Labs-EULA-v1.1.md "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.txt
 
     cd ${pkgname}/_release/
     install -Dm644 Onivim2.AppDir/Onivim2.desktop "${pkgdir}"/usr/share/applications/Onivim2.desktop
