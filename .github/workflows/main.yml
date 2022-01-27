@@ -29,8 +29,8 @@ jobs:
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | grep -q "${{ env.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
-          ls -al
-          ls -al ${{ env.pkgName }}
+          msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
+          echo "msg=$msg" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
         #if: ${{ env.cancelJob == 'false' }}
@@ -44,15 +44,11 @@ jobs:
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          ls -al
-          ls -al ${{ env.pkgName }}
-          msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
-          echo "$msg"
           mv .SRCINFO "${{ env.pkgName }}"
           if [ ! -z "$(git status --porcelain)" ]; then
             git add "${{ env.pkgName }}/.SRCINFO"
             git pull
-            git commit -m "$msg ${{ env.pkgName }}/.SRCINFO"
+            git commit -m "${{ msg }} ${{ env.pkgName }}/.SRCINFO"
             git push
             echo "srcModified=true" >> $GITHUB_ENV
           fi
