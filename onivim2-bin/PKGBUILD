@@ -35,7 +35,7 @@ package() {
     install -Dm644 Onivim2.AppDir/Onivim2.desktop "${pkgdir}"/usr/share/applications/Onivim2.desktop
     install -Dm644 Onivim2.AppDir/Onivim2.png "${pkgdir}"/usr/share/pixmaps/Onivim2.png
     cp -Lr Onivim2.AppDir/{AppRun,usr} "${pkgdir}"/opt/onivim2
-    cp -r $(find "${srcdir}"/.esy -type d -path '*i/*camomile-opam*/share/camomile') "${pkgdir}"/opt/onivim2/usr/share
+    cp -r "${srcdir}"/AppCache/camomile "${pkgdir}"/opt/onivim2/usr/share
     ln -s /opt/onivim2/AppRun "${pkgdir}"/usr/bin/Oni2
     find "${pkgdir}" -type f -exec chmod 644 {} \;
     chmod 755 "${pkgdir}"/opt/onivim2/AppRun \
