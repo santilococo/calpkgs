@@ -7,7 +7,10 @@ pkgbase = onivim2-bin
 	license = MIT
 	provides = onivim2
 	conflicts = onivim2
+	options = !strip
 	source = https://github.com/santilococo/oni2/releases/download/v0.5.7/AppDir.tar
-	sha256sums = 38ea5928753466aa39af75ddee837c14eba5c763e329781764085f935d5d0fcf
+	source = https://github.com/santilococo/oni2/releases/download/v0.5.7/AppCache.tar
+	sha256sums = SKIP
+	sha256sums = SKIP
 
 pkgname = onivim2-bin
