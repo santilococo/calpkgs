@@ -45,16 +45,19 @@ jobs:
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           mv .SRCINFO "${{ env.pkgName }}"
-          if [ ! -z "$(git status --porcelain)" ]; then
+          gitStatus="$(git status --porcelain)"
+          if [ ! -z "$gitStatus" ]; then
             git pull
-            if git status --porcelain | grep -q "PKGBUILD"; then
+            if echo "$gitStatus" | grep -q "PKGBUILD"; then
               git add "${{ env.pkgName }}/PKGBUILD"
               git commit -m "Bump ${{ env.pkgName }} version"
             fi
-            git add "${{ env.pkgName }}/.SRCINFO"
-            git commit -m "${{ env.msg }} ${{ env.pkgName }}/.SRCINFO"
+            if echo "$gitStatus" | grep -q ".SRCINFO"; then 
+              git add "${{ env.pkgName }}/.SRCINFO"
+              git commit -m "${{ env.msg }} ${{ env.pkgName }}/.SRCINFO"
+              echo "srcModified=true" >> $GITHUB_ENV
+            fi
             git push
-            echo "srcModified=true" >> $GITHUB_ENV
           fi
        
       - name: Push to AUR
