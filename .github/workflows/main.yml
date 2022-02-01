@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||N']
+        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y']
     steps:
       - name: Set env variables
         run: |
