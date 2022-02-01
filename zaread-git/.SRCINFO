@@ -10,10 +10,8 @@ pkgbase = zaread-git
 	provides = zaread
 	conflicts = zaread
 	source = git+https://github.com/paoloap/zaread.git
-	source = markdown.patch::https://github.com/paoloap/zaread/pull/2.patch
-	source = cache.patch::https://github.com/paoloap/zaread/pull/4.patch
+	source = markdown_ebook_cache.patch
 	sha256sums = SKIP
-	sha256sums = a672ca390255a51b99f44998ae6c9955db5caea6051ccf1aef0610b1d00bc1e4
-	sha256sums = daaabcb0c7728947567ecad716c6abdb55b2fb04cd7b5db9f600311748f56f39
+	sha256sums = de08cd9a3212405ec95557b648ad222bd5db49fb55339fd5ffa10c2df153ec3a
 
 pkgname = zaread-git
