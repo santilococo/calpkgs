@@ -13,13 +13,9 @@ makedepends=("git")
 provides=("zaread")
 conflicts=("zaread")
 source=("git+${url}.git" 
-        "markdown.patch::${url}/pull/2.patch" 
-        "cache.patch::${url}/pull/4.patch"
-        "ebook.patch::${url}/pull/5.patch")
+        "markdown_ebook_cache.patch")
 sha256sums=('SKIP'
-            'a672ca390255a51b99f44998ae6c9955db5caea6051ccf1aef0610b1d00bc1e4'
-            'daaabcb0c7728947567ecad716c6abdb55b2fb04cd7b5db9f600311748f56f39'
-            'ee014cda84d2c0d41fa62c157cd295901c2673b0091a10b618f8ff00921dbc9e')
+            'de08cd9a3212405ec95557b648ad222bd5db49fb55339fd5ffa10c2df153ec3a')
 
 pkgver() {
     cd "${srcdir}/${_pkgname}"
@@ -28,9 +24,7 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_pkgname}"
-    patch -p1 < "${srcdir}/markdown.patch"
-    patch -p1 < "${srcdir}/cache.patch"
-    patch -p1 < "${srcdir}/ebook.patch"
+    patch -p1 < "${srcdir}/markdown_ebook_cache.patch"
 }
 
 package() {
