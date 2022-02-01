@@ -5,6 +5,7 @@ pkgbase = onivim2-bin
 	url = https://github.com/santilococo/oni2
 	arch = x86_64
 	license = MIT
+	depends = glu
 	provides = onivim2
 	conflicts = onivim2
 	options = !strip
