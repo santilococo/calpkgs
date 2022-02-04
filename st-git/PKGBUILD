@@ -1,0 +1,33 @@
+# Maintainer: Santiago Lo Coco <santilococo.01 at gmail dot com>
+
+_pkgname="st"
+pkgname="${_pkgname}-git"
+pkgver=1
+pkgrel=1
+pkgdesc="Heavily-patched build of st terminal."
+arch=('x86_64')
+url="https://github.com/santilococo/st"
+license=('MIT')
+depends=("libxft-bgra")
+makedepends=("ncurses" "libxext" "git")
+provides=('st')
+conflicts=('st')
+source=("git+${url}")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "${_pkgname}"
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd "${_pkgname}"
+    make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
+}
+
+package() {
+    cd "${_pkgname}"
+    make PREFIX=/usr DESTDIR="${pkgdir}" install
+    install -d -m755 "${pkgdir}/usr/share/licenses/${_pkgname}"
+    install -m644 LICENSE "${pkgdir}/usr/share/licenses/${_pkgname}/"
+}
