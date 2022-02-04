@@ -3,7 +3,7 @@
 _pkgname="zaread"
 pkgname="${_pkgname}-git"
 pkgver=r13.4a59a78
-pkgrel=2
+pkgrel=3
 pkgdesc="A (very) lightweight MS Office file reader."
 arch=("any")
 url="https://github.com/paoloap/zaread"
