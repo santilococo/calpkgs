@@ -1,4 +1,4 @@
-# arch-packages
+# calpkgs
 
 This repo contains all the packages that I mantain (or would like to) in the [AUR][1].
 
@@ -10,6 +10,6 @@ This repo contains all the packages that I mantain (or would like to) in the [AU
 PRs are welcome.
 
 ## License <a name="license"></a>
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://raw.githubusercontent.com/santilococo/calpkgs/master/LICENSE.md)
 
 [1]: https://aur.archlinux.org/packages/?K=santilococo&SeB=m
