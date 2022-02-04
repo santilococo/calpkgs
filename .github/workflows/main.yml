@@ -50,7 +50,18 @@ jobs:
         
       - name: Debug
         run: |
+          git config --local user.name "$(git log --format=%an | head -n 1)"
+          git config --local user.email "$(git log --format=%ae | head -n 1)"
+          echo ".gitignore\ncalrepo" > .gitignore
           ls -al
+          mv .SRCINFO "${{ env.pkgName }}"
+          git status
+          pkgFileName=$(ls *.pkg.tar.zst)
+          matchFile=$(find ${{ env.pkgName }} -name "$pkgFileName" | wc -l)
+          if [ $matchFile -eq 0 ]; then
+            mv "$pkgFileName"* calrepo/x86_64
+          fi
+          cd calrepo
           git status
        
 #       - name: Push .SRCINFO
