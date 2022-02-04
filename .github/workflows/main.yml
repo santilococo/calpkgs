@@ -57,7 +57,9 @@ jobs:
           oldFiles=$(ls "calrepo/x86_64/${{ env.pkgName }}"*)
           matchFile=$(find calrepo/x86_64 -maxdepth 1 -name "$pkgFileName" | wc -l)
           if [ $matchFile -eq 0 ]; then
-            rm -f "$oldFiles"
+            for file in $oldFiles; do
+              rm -f "$file"
+            done
             mv "$pkgFileName"* calrepo/x86_64
           else
             rm -f "$pkgFileName"*
