@@ -55,7 +55,7 @@ jobs:
           ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
-          matchFile=$(find calrepo/x86_64 -name "$pkgFileName" | wc -l)
+          matchFile=$(find calrepo/x86_64 -maxdepth 1 -name "$pkgFileName" | wc -l)
           if [ $matchFile -eq 0 ]; then
             mv "$pkgFileName"* calrepo/x86_64
           else
