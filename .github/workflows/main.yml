@@ -41,7 +41,7 @@ jobs:
           echo "msg=$msg" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+#         if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
         with:
           pkgdir: "${{ env.pkgName }}"
