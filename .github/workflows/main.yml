@@ -51,6 +51,7 @@ jobs:
       - name: Push to calrepo
         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
+          ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
           arch="$(grep -oP '(?<=arch=\(").*?(?="\))' ${{ env.pkgName }}/PKGBUILD)"
@@ -65,6 +66,7 @@ jobs:
             rm -f "$pkgFileName"*
           fi
           cd calrepo
+          ls -al
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           gitStatus="$(git status --porcelain)"
