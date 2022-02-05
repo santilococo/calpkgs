@@ -11,8 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#         pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
-        pkgInfo: ['st-git|1|N']
+        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
     steps:
       - name: Set env variables
         run: |
@@ -41,7 +40,7 @@ jobs:
           echo "msg=$msg" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
-#         if: ${{ env.cancelJob == 'false' }}
+        if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
         with:
           pkgdir: "${{ env.pkgName }}"
@@ -50,20 +49,14 @@ jobs:
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
         
       - name: Push to calrepo
-#         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
+        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
-          ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
-          echo "PKG $pkgFileName"
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
-          ls -al ${{ env.pkgName }}/PKGBUILD
           arch="$(grep -oP '(?<=arch=\(").*?(?="\))' ${{ env.pkgName }}/PKGBUILD)"
-          oldFiles=$(ls "calrepo/$arch/${{ env.pkgName }}"*)
-          echo "OLD $oldFiles"
           matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
-          echo "MATCH $matchFile"
-          ls calrepo/$arch
           if [ $matchFile -eq 0 ]; then
+            set +e; oldFiles=$(ls "calrepo/$arch/${{ env.pkgName }}"*); set -e 
             for file in $oldFiles; do
               rm -f "$file"
             done
@@ -72,7 +65,6 @@ jobs:
             rm -f "$pkgFileName"*
           fi
           cd calrepo
-          ls -al
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           gitStatus="$(git status --porcelain)"
@@ -83,7 +75,7 @@ jobs:
           fi
        
       - name: Push .SRCINFO
-#         if: ${{ env.cancelJob == 'false' }}
+        if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
