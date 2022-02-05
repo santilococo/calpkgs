@@ -58,7 +58,7 @@ jobs:
           if [ $matchFile -eq 0 ]; then
             while read -r -d '' file ; do
               rm -f "$file"
-            done < <(find -H "calrepo/$arch" -regex '.*${{ env.pkgName }}.*' -print0)
+            done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
             mv "$pkgFileName"* calrepo/$arch
           else
             rm -f "$pkgFileName"*
