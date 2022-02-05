@@ -53,10 +53,14 @@ jobs:
         run: |
           ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
+          echo "$pkgFileName"
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
           arch="$(grep -oP '(?<=arch=\(").*?(?="\))' ${{ env.pkgName }}/PKGBUILD)"
           oldFiles=$(ls "calrepo/$arch/${{ env.pkgName }}"*)
-          matchFile=$(find calrepo/$arch -maxdepth 1 -name "$pkgFileName" | wc -l)
+          echo "$oldFiles"
+          matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
+          echo "$matchFile"
+          ls calrepo/$arch
           if [ $matchFile -eq 0 ]; then
             for file in $oldFiles; do
               rm -f "$file"
