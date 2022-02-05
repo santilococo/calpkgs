@@ -11,7 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
+#         pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
+        pkgInfo: ['st-git|1|N']
     steps:
       - name: Set env variables
         run: |
@@ -49,7 +50,7 @@ jobs:
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
         
       - name: Push to calrepo
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
+#         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
           ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
@@ -82,7 +83,7 @@ jobs:
           fi
        
       - name: Push .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+#         if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
