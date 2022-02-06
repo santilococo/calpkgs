@@ -52,6 +52,7 @@ jobs:
       - name: Push to calrepo
 #         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
+          ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
           arch="$(grep -oP '(?<=arch=\(").*?(?="\))' ${{ env.pkgName }}/PKGBUILD)"
