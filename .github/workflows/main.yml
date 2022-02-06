@@ -11,7 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
+#         pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
+        pkgInfo: ['st-git||N']
     steps:
       - name: Set env variables
         run: |
@@ -40,7 +41,7 @@ jobs:
           echo "msg=$msg" >> $GITHUB_ENV
       
       - name: Makepkg build, check and generate .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+#         if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/pkgbuild-action@master
         with:
           pkgdir: "${{ env.pkgName }}"
@@ -49,7 +50,7 @@ jobs:
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
         
       - name: Push to calrepo
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
+#         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
@@ -59,10 +60,14 @@ jobs:
             while read -r -d '' file ; do
               rm -f "$file"
             done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
+            echo "$arch $pkgFileName $matchFile"
             mv "$pkgFileName"* calrepo/$arch
+            echo "move"
           else
+            echo "not move"
             rm -f "$pkgFileName"*
           fi
+          ls -al
           cd calrepo
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
