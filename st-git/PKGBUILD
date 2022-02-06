@@ -3,7 +3,7 @@
 _pkgname="st"
 pkgname="${_pkgname}-git"
 pkgver=0.8.5.r3.g1757037
-pkgrel=1
+pkgrel=2
 pkgdesc="Heavily-patched build of st terminal."
 arch=('x86_64')
 url="https://github.com/santilococo/st"
