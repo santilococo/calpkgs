@@ -56,7 +56,8 @@ jobs:
           ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
-          arch="$(grep -oP '(?<=arch=\(").*?(?="\))' ${{ env.pkgName }}/PKGBUILD)"
+          ls -al "${{ env.pkgName }}/PKGBUILD"
+          arch="$(grep -oP '(?<=arch=\(").*?(?="\))' "${{ env.pkgName }}/PKGBUILD")"
           echo "$arch $pkgFileName"
           matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
           echo "$matchFile"
