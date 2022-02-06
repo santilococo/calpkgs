@@ -52,28 +52,18 @@ jobs:
       - name: Push to calrepo
 #         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
-          ls *.pkg.tar.zst
-          ls -al
           pkgFileName=$(ls *.pkg.tar.zst)
           [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
-          ls -al "${{ env.pkgName }}/PKGBUILD"
-          arch="$(grep -oP '(?<=arch=\(").*?(?="\))' "${{ env.pkgName }}/PKGBUILD")"
-          echo "$arch $pkgFileName"
+          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
           matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
-          echo "$matchFile"
           if [ $matchFile -eq 0 ]; then
-            echo "match file"
             while read -r -d '' file; do
               rm -f "$file"
             done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
-            echo "$arch $pkgFileName $matchFile"
             mv "$pkgFileName"* calrepo/$arch
-            echo "move"
           else
-            echo "not move"
             rm -f "$pkgFileName"*
           fi
-          ls -al
           cd calrepo
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
