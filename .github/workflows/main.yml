@@ -39,12 +39,12 @@ jobs:
           msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
           echo "msg=$msg" >> $GITHUB_ENV
       
-      - name: Makepkg build, check and generate .SRCINFO
+      - name: Build package and output .SRCINFO
         if: ${{ env.cancelJob == 'false' }}
-        uses: santilococo/pkgbuild-action@master
+        uses: santilococo/calbuilder@master
         with:
-          pkgdir: "${{ env.pkgName }}"
-          aurDeps: "${{ env.aurDeps }}"
+          pkgDir: "${{ env.pkgName }}"
+          gpgPublicKey: "199980CE93F18E62"
           gpgPrivateKey: "${{ secrets.GPG_PRIVATE_KEY }}"
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
         
