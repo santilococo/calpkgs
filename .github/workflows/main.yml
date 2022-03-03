@@ -117,7 +117,7 @@ jobs:
           git checkout master ${{ env.pkgName }}
           mv ${{ env.pkgName }}/PKGBUILD .
           mv ${{ env.pkgName }}/.SRCINFO .
-          rm -rf ${{ env.pkgName }}
+          rm -rf ${{ env.pkgName }} calrepo
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
             git commit -m "$msg"
