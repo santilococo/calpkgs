@@ -11,15 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgInfo: ['zaread-git||N', 'holehe-git|1|Y', 'libxft-bgra||Y', 'onivim2-bin||Y', 'st-git|1|N']
+        pkgInfo: ['zaread-git|N', 'holehe-git|Y', 'libxft-bgra|Y', 'onivim2-bin|Y', 'st-git|N']
     steps:
       - name: Set env variables
         run: |
           pkgName=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f1)
           echo "pkgName=$pkgName" >> $GITHUB_ENV
-          aurDeps=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
-          echo "aurDeps=$aurDeps" >> $GITHUB_ENV
-          inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f3)
+          inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
           echo "inAur=$inAur" >> $GITHUB_ENV
           
       - uses: actions/checkout@v2
