@@ -50,15 +50,16 @@ jobs:
         if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
         run: |
           pkgFileName=$(ls *.pkg.tar.zst)
-          [ ! -f "$pkgFileName" ] && msg="Add" || msg="Update"
           arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
           matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
           if [ $matchFile -eq 0 ]; then
+            msg="Add"
             while read -r -d '' file; do
               rm -f "$file"
             done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
             mv "$pkgFileName"* calrepo/$arch
           else
+            msg="Update"
             rm -f "$pkgFileName"*
           fi
           cd calrepo
