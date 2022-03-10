@@ -2,8 +2,8 @@
 
 _pkgname="dwm"
 pkgname="${_pkgname}-git"
-pkgver=1
-pkgrel=2
+pkgver=6.3.r0.gc54bfe7
+pkgrel=1
 pkgdesc="Heavily-patched build of dwm."
 arch=('x86_64')
 url="https://github.com/santilococo/dwm"
