@@ -53,15 +53,15 @@ jobs:
           arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
           findOutput=$(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" | wc -l)
           [ $findOutput -eq 0 ] && msg="Add" || msg="Update"
-          matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
-          if [ $matchFile -eq 0 ]; then
+          # matchFile=$(find "calrepo/$arch" -maxdepth 1 -name "$pkgFileName" | wc -l)
+          # if [ $matchFile -eq 0 ]; then
             while read -r -d '' file; do
               rm -f "$file"
             done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
             mv "$pkgFileName"* calrepo/$arch
-          else
-            rm -f "$pkgFileName"*
-          fi
+          # else
+          #   rm -f "$pkgFileName"*
+          # fi
           cd calrepo
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
