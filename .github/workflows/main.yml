@@ -68,7 +68,7 @@ jobs:
           gitStatus="$(git status --porcelain)"
           if [ ! -z "$gitStatus" ]; then
             git add .
-            git commit -m "$msg $pkgFileName"
+            git commit -m "$msg ${{ env.pkgName }}"
             git push
           fi
        
