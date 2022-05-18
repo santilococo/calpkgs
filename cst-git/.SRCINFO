@@ -1,8 +1,8 @@
-pkgbase = st-git
+pkgbase = cst-git
 	pkgdesc = Heavily-patched build of st terminal.
-	pkgver = 0.8.5.r3.g1757037
-	pkgrel = 2
-	url = https://github.com/santilococo/st
+	pkgver = 0.8.5.r13.gb5940bd
+	pkgrel = 1
+	url = https://github.com/santilococo/cst
 	arch = x86_64
 	license = MIT
 	makedepends = ncurses
@@ -11,7 +11,7 @@ pkgbase = st-git
 	depends = libxft-bgra
 	provides = st
 	conflicts = st
-	source = git+https://github.com/santilococo/st
+	source = git+https://github.com/santilococo/cst
 	sha256sums = SKIP
 
-pkgname = st-git
+pkgname = cst-git
