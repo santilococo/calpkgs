@@ -1,0 +1,16 @@
+pkgbase = cdmenu-git
+	pkgdesc = Heavily-patched build of dmenu.
+	pkgver = 5.1.r1.g57a911c
+	pkgrel = 1
+	url = https://github.com/santilococo/cdmenu
+	arch = x86_64
+	license = MIT
+	makedepends = libxinerama
+	makedepends = git
+	depends = libxft-bgra
+	provides = dmenu
+	conflicts = dmenu
+	source = git+https://github.com/santilococo/cdmenu
+	sha256sums = SKIP
+
+pkgname = cdmenu-git
