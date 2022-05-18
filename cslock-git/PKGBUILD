@@ -2,8 +2,8 @@
 
 _pkgname="cslock"
 pkgname="${_pkgname}-git"
-pkgver=0.8.5.r3.g1757037
-pkgrel=2
+pkgver=1.4.r22.gf751e16
+pkgrel=1
 pkgdesc="Heavily-patched build of st terminal."
 arch=('x86_64')
 url="https://github.com/santilococo/cslock"
