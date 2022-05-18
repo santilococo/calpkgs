@@ -1,0 +1,18 @@
+pkgbase = cslock-git
+	pkgdesc = Heavily-patched build of st terminal.
+	pkgver = 1.4.r22.gf751e16
+	pkgrel = 1
+	url = https://github.com/santilococo/cslock
+	arch = x86_64
+	license = MIT
+	makedepends = git
+	depends = libxrandr
+	depends = libxinerama
+	depends = libxft-bgra
+	depends = imlib2
+	provides = slock
+	conflicts = slock
+	source = git+https://github.com/santilococo/cslock
+	sha256sums = SKIP
+
+pkgname = cslock-git
