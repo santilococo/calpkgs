@@ -62,6 +62,7 @@ jobs:
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           gitStatus="$(git status --porcelain)"
           if [ ! -z "$gitStatus" ]; then
+            git pull
             git add .
             git commit -m "$msg ${{ env.pkgName }}"
             git push
