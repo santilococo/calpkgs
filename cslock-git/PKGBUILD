@@ -2,7 +2,7 @@
 
 _pkgname="cslock"
 pkgname="${_pkgname}-git"
-pkgver=1.4.r23.ge472847
+pkgver=1
 pkgrel=1
 pkgdesc="Heavily-patched build of slock."
 arch=('x86_64')
