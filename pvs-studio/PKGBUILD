@@ -1,0 +1,25 @@
+# Maintainer: Santiago Lo Coco <santilococo.01 at gmail dot com>
+
+pkgname="pvs-studio"
+pkgver=7.19.61166.216
+pkgrel=1
+pkgdesc="Static code analyzer for C and C++."
+arch=("x86_64")
+url="https://cdn.pvs-studio.com"
+license=("unknown")
+provides=("pvs-studio")
+conflicts=("pvs-studio")
+source=("${url}/${pkgname}-${pkgver}-x86_64.tgz")
+sha256sums=('SKIP')
+
+pkgver() {
+    wget -O index.html https://pvs-studio.com/en/pvs-studio/download-all 2> /dev/null
+    # grep -oP "https://cdn.pvs-studio.com/pvs-studio-.*x86_64.tgz" index.html
+    grep -oP '(?<=https://cdn.pvs-studio.com/pvs-studio-).*(?=-x86_64.tgz)' index.html
+    rm index.html
+}
+
+package() {
+    cd "${srcdir}/$pkgname-$pkgver-x86_64/bin"
+    install -D -m 755 -t "$pkgdir/usr/bin" "$pkgname" "$pkgname-analyzer" plog-converter
+}
