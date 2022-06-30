@@ -2,7 +2,7 @@
 
 pkgname="pvs-studio"
 pkgver=7.19.61166.216
-pkgrel=1
+pkgrel=2
 pkgdesc="Static code analyzer for C and C++."
 arch=("x86_64")
 url="https://cdn.pvs-studio.com"
