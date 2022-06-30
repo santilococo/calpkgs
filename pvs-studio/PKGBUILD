@@ -10,13 +10,7 @@ license=("unknown")
 provides=("pvs-studio")
 conflicts=("pvs-studio")
 source=("${url}/${pkgname}-${pkgver}-x86_64.tgz")
-sha256sums=('SKIP')
-
-pkgver() {
-    wget -O index.html https://pvs-studio.com/en/pvs-studio/download-all 2> /dev/null
-    grep -oP '(?<=https://cdn.pvs-studio.com/pvs-studio-).*(?=-x86_64.tgz)' index.html
-    rm index.html
-}
+sha256sums=('3d54c946f62ce2d09a983f8be86b63a201ca9be714c967288ec58b3be93abd40')
 
 package() {
     cd "${srcdir}/$pkgname-$pkgver-x86_64/bin"
