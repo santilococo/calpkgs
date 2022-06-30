@@ -1,0 +1,13 @@
+pkgbase = pvs-studio
+	pkgdesc = Static code analyzer for C and C++.
+	pkgver = 7.19.61166.216
+	pkgrel = 2
+	url = https://cdn.pvs-studio.com
+	arch = x86_64
+	license = unknown
+	provides = pvs-studio
+	conflicts = pvs-studio
+	source = https://cdn.pvs-studio.com/pvs-studio-7.19.61166.216-x86_64.tgz
+	sha256sums = 3d54c946f62ce2d09a983f8be86b63a201ca9be714c967288ec58b3be93abd40
+
+pkgname = pvs-studio
