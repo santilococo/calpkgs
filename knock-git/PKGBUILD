@@ -26,9 +26,11 @@ build() {
     git fetch origin pull/60/head:multi-system
     git checkout multi-system
     mkdir -p "${srcdir}/store"
-    ls /nix
-    ls "${srcdir}"
+    ls -la /nix
+    ls -la "${srcdir}"
     nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
+    ls -la /nix
+    ls -la "${srcdir}"
 }
 
 package() {
