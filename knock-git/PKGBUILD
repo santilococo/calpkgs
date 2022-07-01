@@ -24,6 +24,7 @@ pkgver() {
 build() {
     cd "${_pkgname}"
     git fetch origin pull/60/head:multi-system
+    git checkout multi-system
     mkdir -p store
     nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
 }
