@@ -28,9 +28,11 @@ build() {
     mkdir -p "${srcdir}/store"
     ls -la /nix
     ls -la "${srcdir}"
-    nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
-    ls -la /nix
-    ls -la "${srcdir}"
+    nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store" || var=$?
+    if [ $var -eq 1 ]; then
+        ls -la /nix
+        ls -la "${srcdir}"
+    fi
 }
 
 package() {
