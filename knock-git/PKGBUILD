@@ -32,4 +32,9 @@ build() {
 package() {
     install -Dm755 "${srcdir}/store/$(readlink ${srcdir}/${_pkgname}/result | sed 's/^\///g')/bin/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
     install -Dm644 "${srcdir}/${_pkgname}/license" "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
+
+    # Clean up 600MB
+    nix store gc --extra-experimental-features nix-command --store "${srcdir}/store"
+    chmod -R +w "${srcdir}/store"
+    rm -rf "${srcdir}/store"
 }
