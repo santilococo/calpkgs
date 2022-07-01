@@ -30,7 +30,7 @@ build() {
     ls -la "${srcdir}"
     nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store" || var=$?
     if [ $var -eq 1 ]; then
-        nix log /nix/store/fc3mhn4cmsflxdmycddlgsrrhwvn725z-base64-x86_64-unknown-linux-musl.drv
+        nix log /nix/store/fc3mhn4cmsflxdmycddlgsrrhwvn725z-base64-x86_64-unknown-linux-musl.drv --extra-experimental-features nix-command
         ls -la /nix
         ls -la "${srcdir}"
         return 1
