@@ -30,7 +30,6 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${_pkgname}/result/bin"
-    install -Dm755 "${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
-    install -Dm644 license "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
+    install -Dm755 "{srcdir}/store/$(readlink ${srcdir}/${_pkgname}/result | sed 's/^\///g')/bin/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+    install -Dm644 "${srcdir}/${_pkgname}/license" "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
 }
