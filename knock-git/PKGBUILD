@@ -1,0 +1,36 @@
+# Maintainer: Santiago Lo Coco <santilococo.01 at gmail dot com>
+
+_pkgname="knock"
+pkgname="${_pkgname}-git"
+pkgver=1
+pkgrel=1
+pkgdesc="Convert ACSM files to PDFs/EPUBs with one command."
+arch=('x86_64')
+url="https://github.com/BentonEdmondson/knock"
+license=('MIT')
+makedepends=("nix" "git")
+provides=('knock')
+conflicts=('knock')
+source=("git+${url}" 
+        "multi_system.patch::${url}/pull/60.patch")
+sha256sums=('SKIP' 
+            'SKIP')
+
+pkgver() {
+    cd "${_pkgname}"
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd "${_pkgname}"
+    patch -p1 < "${srcdir}/multi_system.patch"
+    git add .
+    git -c user.name='test' -c user.email='test@test.com' commit -m 'test'
+    nix build
+}
+
+package() {
+    cd "${_pkgname}/result/bin"
+    install -Dm755 "${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+    install -Dm644 license "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
+}
