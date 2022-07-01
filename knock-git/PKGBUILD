@@ -8,6 +8,7 @@ pkgdesc="Convert ACSM files to PDFs/EPUBs with one command."
 arch=('x86_64')
 url="https://github.com/BentonEdmondson/knock"
 license=('MIT')
+depends=("bash")
 makedepends=("nix" "git")
 provides=('knock')
 conflicts=('knock')
