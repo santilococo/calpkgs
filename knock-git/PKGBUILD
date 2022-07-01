@@ -23,11 +23,9 @@ pkgver() {
 
 build() {
     cd "${_pkgname}"
-    # patch -p1 < "${srcdir}/multi_system.patch"
-    # git add .
-    # git -c user.name='test' -c user.email='test@test.com' commit -m 'test'
     git fetch origin pull/60/head:multi-system
-    nix build --extra-experimental-features nix-command --extra-experimental-features flakes
+    mkdir -p store
+    nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
 }
 
 package() {
