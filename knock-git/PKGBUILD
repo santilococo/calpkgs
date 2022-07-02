@@ -24,11 +24,11 @@ pkgver() {
 
 build() {
     cd "${srcdir}/${_pkgname}"
-    git fetch origin pull/60/head:multi-system
-    git checkout multi-system
+    # git fetch origin pull/60/head:multi-system
+    # git checkout multi-system
     mkdir -p "${srcdir}/store"
     nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store" || var=$?
-    
+
     if [ $var -eq 1 ]; then
         ls -la /nix
         ls -la "${srcdir}/store"
