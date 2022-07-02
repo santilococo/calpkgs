@@ -27,14 +27,12 @@ build() {
     git fetch origin pull/60/head:multi-system
     git checkout multi-system
     mkdir -p "${srcdir}/store"
-    ls -la /nix
-    ls -la "${srcdir}/store"
-    # export NIX_STORE_DIR="${srcdir}/store/nix/store"
     nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store" || var=$?
+    
     if [ $var -eq 1 ]; then
-        # nix log "${srcdir}/store/nix/store/fc3mhn4cmsflxdmycddlgsrrhwvn725z-base64-x86_64-unknown-linux-musl.drv" --extra-experimental-features nix-command --store "${srcdir}/store"
         ls -la /nix
         ls -la "${srcdir}/store"
+        ls -la "${srcdir}/store/nix/store"
         return 1
     fi
 }
