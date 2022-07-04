@@ -16,6 +16,7 @@ source=("git+${url}"
         "multi_system.patch::${url}/pull/60.patch"
         "https://github.com/DavHau/nix-portable/releases/download/v009/nix-portable")
 sha256sums=('SKIP' 
+            'SKIP'
             'SKIP')
 
 pkgver() {
