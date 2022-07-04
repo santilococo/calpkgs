@@ -33,7 +33,7 @@ build() {
 
     export NP_LOCATION="${srcdir}"
     chmod +x "${srcdir}/nix-portable"
-    ./"${srcdir}/nix-portable" nix build
+    ."${srcdir}/nix-portable" nix build
 
     # mkdir -p "${srcdir}/store"
     # nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
