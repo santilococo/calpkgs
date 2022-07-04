@@ -13,7 +13,8 @@ makedepends=("nix" "git")
 provides=('knock')
 conflicts=('knock')
 source=("git+${url}" 
-        "multi_system.patch::${url}/pull/60.patch")
+        "multi_system.patch::${url}/pull/60.patch"
+        "https://github.com/DavHau/nix-portable/releases/download/v009/nix-portable")
 sha256sums=('SKIP' 
             'SKIP')
 
@@ -26,23 +27,26 @@ build() {
     cd "${srcdir}/${_pkgname}"
     git fetch origin pull/60/head:multi-system
     git checkout multi-system
-    mkdir -p "${srcdir}/store"
-    nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store" || var=$?
 
-    if [ $var -eq 1 ]; then
-        nix-store --verify --check-contents --repair --extra-experimental-features nix-command --store "${srcdir}/store"
-        ls -la /nix
-        ls -la "${srcdir}/store"
-        ls -la "${srcdir}/store/nix/store"
-        return 1
-    fi
+    df -H
+
+    export NP_LOCATION="${srcdir}"
+    chmod +x "${srcdir}/nix-portable"
+    ./"${srcdir}/nix-portable" nix build
+
+    # mkdir -p "${srcdir}/store"
+    # nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
 }
 
 package() {
-    install -Dm755 "${srcdir}/store/$(readlink ${srcdir}/${_pkgname}/result | sed 's/^\///g')/bin/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+    install -Dm755 "${srcdir}/.nix-portable/$(readlink ${srcdir}/${_pkgname}/result | sed 's/^\/nix\///g')/bin/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
     install -Dm644 "${srcdir}/${_pkgname}/license" "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
 
-    nix store gc --extra-experimental-features nix-command --store "${srcdir}/store"
-    chmod -R +w "${srcdir}/store"
-    rm -rf "${srcdir}/store"
+    df -H
+
+    # nix store gc --extra-experimental-features nix-command --store "${srcdir}/store"
+    chmod -R +w "${srcdir}/.nix-portable"
+    rm -rf "${srcdir}/.nix-portable"
+
+    df -H
 }
