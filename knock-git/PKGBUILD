@@ -9,7 +9,7 @@ arch=('x86_64')
 url="https://github.com/BentonEdmondson/knock"
 license=('MIT')
 depends=("bash")
-makedepends=("nix" "git")
+makedepends=("git")
 provides=('knock')
 conflicts=('knock')
 source=("git+${url}" 
@@ -33,7 +33,7 @@ build() {
 
     export NP_LOCATION="${srcdir}"
     chmod +x "${srcdir}/nix-portable"
-    ."${srcdir}/nix-portable" nix build
+    sh "${srcdir}/nix-portable" nix build
 
     # mkdir -p "${srcdir}/store"
     # nix build --extra-experimental-features nix-command --extra-experimental-features flakes --store "${srcdir}/store"
