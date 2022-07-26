@@ -8,7 +8,7 @@ pkgdesc='Simple, fast web crawler designed for easy, quick discovery of endpoint
 arch=('x86_64')
 url="https://github.com/hakluke/${_pkgname}"
 license=('GPL')
-makedepends=('go')
+makedepends=('go' 'git')
 source=("git+${url}.git")
 sha256sums=('SKIP')
 
