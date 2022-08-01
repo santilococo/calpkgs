@@ -2,7 +2,7 @@
 
 _pkgname="zaread"
 pkgname="${_pkgname}-git"
-pkgver=1
+pkgver=r53.86e148e
 pkgrel=1
 pkgdesc="A (very) lightweight MS Office file reader."
 arch=("any")
