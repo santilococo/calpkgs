@@ -8,7 +8,10 @@ pkgdesc="A (very) lightweight MS Office file reader."
 arch=("any")
 url="https://github.com/paoloap/zaread"
 license=("GPL")
-depends=("sh")
+optdepends=("zathura: PDF reader"
+            "libreoffice: office files support"
+            "calibre: MOBI files support"
+            "md2pdf: MD files support")
 makedepends=("git")
 provides=("zaread")
 conflicts=("zaread")
