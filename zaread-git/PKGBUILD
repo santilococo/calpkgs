@@ -2,8 +2,8 @@
 
 _pkgname="zaread"
 pkgname="${_pkgname}-git"
-pkgver=r13.4a59a78
-pkgrel=5
+pkgver=1
+pkgrel=1
 pkgdesc="A (very) lightweight MS Office file reader."
 arch=("any")
 url="https://github.com/paoloap/zaread"
@@ -12,19 +12,12 @@ depends=("bash")
 makedepends=("git")
 provides=("zaread")
 conflicts=("zaread")
-source=("git+${url}.git" 
-        "markdown_ebook_cache.patch")
-sha256sums=('SKIP'
-            'de08cd9a3212405ec95557b648ad222bd5db49fb55339fd5ffa10c2df153ec3a')
+source=("git+${url}.git")
+sha256sums=('SKIP')
 
 pkgver() {
     cd "${srcdir}/${_pkgname}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
-
-prepare() {
-    cd "${srcdir}/${_pkgname}"
-    patch -p1 < "${srcdir}/markdown_ebook_cache.patch"
 }
 
 package() {
