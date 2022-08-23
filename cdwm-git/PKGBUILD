@@ -2,7 +2,7 @@
 
 _pkgname="cdwm"
 pkgname="${_pkgname}-git"
-pkgver=6.3.r13.g3a03d9b
+pkgver=6.3.r14.g5c1cf33
 pkgrel=1
 pkgdesc="Heavily-patched build of dwm."
 arch=('x86_64')
