@@ -2,7 +2,7 @@
 
 _pkgname="cdmenu"
 pkgname="${_pkgname}-git"
-pkgver=5.1.r1.g57a911c
+pkgver=5.1.r2.gd2f18a7
 pkgrel=1
 pkgdesc="Heavily-patched build of dmenu."
 arch=('x86_64')
