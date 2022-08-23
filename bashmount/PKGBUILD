@@ -7,10 +7,11 @@ pkgdesc="Tool to mount and unmount removable media from the command-line."
 arch=("any")
 url="https://github.com/jamielinux/bashmount"
 license=("GPL2")
-depends=("eject")
+# depends=("eject")
 optdepends=('udisks2: remove media without sudo')
 provides=("bashmount")
 conflicts=("bashmount")
+backup=('etc/bashmount.conf')
 source=("${url}/archive/${pkgver}.tar.gz")
 sha256sums=('4fa5be39b10c3ce24f3f21ff6605ce0499ab9b24baf1b5762be36b9003eab169')
 
