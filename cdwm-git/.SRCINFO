@@ -1,6 +1,6 @@
 pkgbase = cdwm-git
 	pkgdesc = Heavily-patched build of dwm.
-	pkgver = 6.3.r13.g3a03d9b
+	pkgver = 6.3.r14.g5c1cf33
 	pkgrel = 1
 	url = https://github.com/santilococo/cdwm
 	arch = x86_64
