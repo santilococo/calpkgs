@@ -2,8 +2,8 @@
 
 _pkgname="bashmount"
 pkgname="${_pkgname}-git"
-pkgver=1
-pkgrel=2
+pkgver=r210.9a15ab7
+pkgrel=1
 pkgdesc="Tool to mount and unmount removable media from the command-line."
 arch=('any')
 url="https://github.com/jamielinux/bashmount"
