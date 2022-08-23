@@ -16,7 +16,6 @@ sha256sums=('4fa5be39b10c3ce24f3f21ff6605ce0499ab9b24baf1b5762be36b9003eab169')
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
     install -Dm755 bashmount "${pkgdir}/usr/bin/bashmount"
     install -Dm644 bashmount.conf "${pkgdir}/etc/bashmount.conf"
     gzip -c -9 bashmount.1 > bashmount.1.gz

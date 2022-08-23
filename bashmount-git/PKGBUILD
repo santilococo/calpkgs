@@ -22,7 +22,6 @@ pkgver() {
 
 package() {
     cd "${srcdir}/${_pkgname}"
-
     install -Dm755 bashmount "${pkgdir}/usr/bin/bashmount"
     install -Dm644 bashmount.conf "${pkgdir}/etc/bashmount.conf"
     gzip -c -9 bashmount.1 > bashmount.1.gz
