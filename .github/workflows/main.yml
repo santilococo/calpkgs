@@ -112,9 +112,8 @@ jobs:
           git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
           set +e; git pull ${{ env.pkgName }} master; set -e
           git checkout master ${{ env.pkgName }}
-          mv ${{ env.pkgName }}/PKGBUILD .
-          mv ${{ env.pkgName }}/.SRCINFO .
-          rm -rf ${{ env.pkgName }}* calrepo
+          mv ${{ env.pkgName }}/* .
+          rm -rf ${{ env.pkgName }}-* calrepo
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
             git commit -m "$msg"
