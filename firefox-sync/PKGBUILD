@@ -18,6 +18,10 @@ prepare() {
     if [[ -f "/usr/bin/${pkgname}" && "$_linkname" != "" ]]; then
         sed -i "s|LINK=.*|LINK=$_linkname|" "${pkgname}"
     else
+        if [[ -f "$HOME/.mozilla/firefox" ]]; then
+            echo "Firefox profile not found, you need to add your profile to the LINK variable in /usr/bin/firefox-sync" 1>&2 
+            return
+        fi
         _linkname="$(find -H "$HOME/.mozilla/firefox" -maxdepth 1 -mindepth 1 -type d -name \*.default -printf "%f\n")"
         sed -i "s|LINK=.*|LINK=$_linkname|" "${pkgname}"
     fi
