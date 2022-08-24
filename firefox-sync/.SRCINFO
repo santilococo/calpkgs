@@ -5,7 +5,6 @@ pkgbase = firefox-sync
 	url = http://wiki.archlinux.org/index.php/Speed-up_Firefox_using_tmpfs
 	arch = any
 	license = GPL
-	makedepends = bash
 	depends = rsync
 	depends = firefox
 	source = firefox-sync
