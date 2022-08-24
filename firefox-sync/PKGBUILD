@@ -1,0 +1,29 @@
+# Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
+
+pkgname=firefox-sync
+pkgver=20220824
+pkgrel=1
+pkgdesc="Speed up Firefox using tmpfs."
+arch=('any')
+url="http://wiki.archlinux.org/index.php/Speed-up_Firefox_using_tmpfs"
+license=('GPL')
+depends=('rsync' 'firefox')
+makedepends=('bash')
+source=("${pkgname}" "${pkgname}.service")
+sha256sums=('f7d50c514437c17df99cdfe53c26e939163d9a6cfe055c51f8c2f20f57c46b07'
+            'f3ca08a806a8938244a7dbe2f8db690963d6a381643884216b1a960c396ec6b9')
+
+prepare() {
+    _linkname="$(grep "LINK=" "/usr/bin/${pkgname}" | head -n1 | cut -d= -f2)"
+    if [[ -f "/usr/bin/${pkgname}" && "$_linkname" != "" ]]; then
+        sed -i "s|LINK=.*|LINK=$_linkname|" "${pkgname}"
+    else
+        _linkname="$(find -H "$HOME/.mozilla/firefox" -maxdepth 1 -mindepth 1 -type d -name \*.default -printf "%f\n")"
+        sed -i "s|LINK=.*|LINK=$_linkname|" "${pkgname}"
+    fi
+}
+
+package() {
+    install -Dm 755 "${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+    install -Dm 644 {"${srcdir}","${pkgdir}"/usr/lib/systemd/user}/"${pkgname}".service
+}
