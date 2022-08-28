@@ -7,8 +7,6 @@ pkgdesc="Static code analyzer for C and C++."
 arch=("x86_64")
 url="https://cdn.pvs-studio.com"
 license=("unknown")
-provides=("pvs-studio")
-conflicts=("pvs-studio")
 source=("${url}/${pkgname}-${pkgver}-x86_64.tgz")
 sha256sums=('3d54c946f62ce2d09a983f8be86b63a201ca9be714c967288ec58b3be93abd40')
 
