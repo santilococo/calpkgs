@@ -113,7 +113,7 @@ jobs:
           set +e; git pull ${{ env.pkgName }} master; set -e
           git checkout master ${{ env.pkgName }}
           find ${{ env.pkgName }} -mindepth 1 -maxdepth 1 -exec mv {} . \;
-          rm -rf ${{ env.pkgName }}-* calrepo
+          rm -rf *.zst* pkg src calrepo
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
             git commit -m "$msg"
