@@ -1,8 +1,8 @@
 # Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
 
 pkgname=firefox-sync
-pkgver=20220824
-pkgrel=3
+pkgver=20220831
+pkgrel=1
 pkgdesc="Speed up Firefox using tmpfs."
 arch=('any')
 url='http://wiki.archlinux.org/index.php/Speed-up_Firefox_using_tmpfs'
