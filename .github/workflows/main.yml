@@ -13,7 +13,7 @@ jobs:
       matrix:
         pkgInfo: ['zaread-git|N', 'holehe-git|Y', 'libxft-bgra|Y', 'onivim2-bin|Y', 'cst-git|N', 'cdwm-git|N', 
                   'cslock-git|N', 'cdmenu-git|N', 'pvs-studio|N', 'knock-git|N', 'hakrawler-git|Y', 'bashmount|Y', 
-                  'bashmount-git|Y', 'firefox-sync|Y']
+                  'bashmount-git|Y', 'firefox-sync|Y', 'pdd-git|Y']
     steps:
       - name: Set env variables
         run: |
