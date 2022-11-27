@@ -2,7 +2,7 @@
 
 _pkgname="isr"
 pkgname="${_pkgname}-git"
-pkgver=r.
+pkgver=1
 pkgrel=1
 pkgdesc="Super-scale your images and run experiments with Residual Dense and Adversarial Networks."
 arch=("any")
