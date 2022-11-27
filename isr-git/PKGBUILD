@@ -3,7 +3,7 @@
 _pkgname="isr"
 pkgname="${_pkgname}-git"
 pkgver=r150.3f6498c
-pkgrel=1
+pkgrel=2
 pkgdesc="Super-scale your images and run experiments with Residual Dense and Adversarial Networks."
 arch=("any")
 url="https://github.com/idealo/image-super-resolution"
