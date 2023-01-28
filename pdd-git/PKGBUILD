@@ -2,7 +2,7 @@
 
 _pkgname='pdd'
 pkgname="${_pkgname}-git"
-pkgver=r132.4de93e9
+pkgver=r143.9c6a3b7
 pkgrel=1
 pkgdesc='Tiny date, time diff calculator with piggybacked timers.'
 arch=('any')
