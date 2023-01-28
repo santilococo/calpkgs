@@ -98,9 +98,10 @@ jobs:
           ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
           echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
           chmod 0600 $HOME/.ssh/aur
+          ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
+          chmod 0644 $HOME/.ssh/aur.pub
           ls -al $HOME
           ls -al $HOME/.ssh
-          ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
           eval $(ssh-agent)
           echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
           
