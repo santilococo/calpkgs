@@ -103,11 +103,8 @@ jobs:
           # ls -al $HOME
           # ls -al $HOME/.ssh
           eval $(ssh-agent)
-          export SSHPASS="${{ secrets.AUR_SSH_PASSPHRASE }}"
-          sshpass -e ssh-add $HOME/.ssh/aur
-          # sleep 1
-          # wc -l $HOME/.ssh/aur
-          # echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
+          ssh-keygen -p -P "${{ secrets.AUR_SSH_PASSPHRASE }}" -N "" -f $HOME/.ssh/aur
+          ssh-add $HOME/.ssh/aur
           
           git pull
           msg="$(git log --format=%s | sed -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
