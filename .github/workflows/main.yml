@@ -103,6 +103,8 @@ jobs:
           ls -al $HOME
           ls -al $HOME/.ssh
           eval $(ssh-agent)
+          sleep 1
+          wc -l $HOME/.ssh/aur
           echo ${{ secrets.AUR_SSH_PASSPHRASE }} | SSH_ASKPASS=/bin/cat SSH_ASKPASS_REQUIRE=force setsid -w ssh-add $HOME/.ssh/aur
           
           git pull
