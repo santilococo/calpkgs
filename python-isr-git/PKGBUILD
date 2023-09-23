@@ -15,7 +15,7 @@ provides=("isr")
 conflicts=("isr" "python-isr")
 source=("git+${url}.git")
 sha256sums=('SKIP')
-_srcname="image-super-resolution-master"
+_srcname="image-super-resolution"
 
 pkgver() {
     cd "${srcdir}/${_srcname}"
