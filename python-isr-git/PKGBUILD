@@ -18,7 +18,7 @@ sha256sums=('SKIP')
 _srcname="image-super-resolution-master"
 
 pkgver() {
-    cd "${srcdir}/${_pkgname}"
+    cd "${srcdir}/${_srcname}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
