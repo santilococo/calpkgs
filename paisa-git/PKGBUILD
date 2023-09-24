@@ -2,7 +2,7 @@
 
 _pkgname="paisa"
 pkgname="${_pkgname}-git"
-pkgver=1
+pkgver=r360.3935dad
 pkgrel=1
 pkgdesc="Personal Finance Manager.."
 arch=("x86_64")
