@@ -2,7 +2,7 @@
 
 _pkgname="paisa"
 pkgname="${_pkgname}-bin"
-pkgver=0.5.3
+pkgver=0.5.4
 pkgrel=1
 pkgdesc="Personal Finance Manager."
 arch=("x86_64")
