@@ -28,12 +28,12 @@ jobs:
         with:
           fetch-depth: 2
       
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-          repository: santilococo/calrepo
-          token: ${{ secrets.GH_PAT }}
-          path: calrepo  
+            #     - uses: actions/checkout@v2
+            #       with:
+            #         fetch-depth: 2
+            #         repository: santilococo/calrepo
+            #         token: ${{ secrets.GH_PAT }}
+            #         path: calrepo  
       
       - name: Check modified files
         run: |
@@ -50,27 +50,27 @@ jobs:
           gpgPrivateKey: "${{ secrets.GPG_PRIVATE_KEY }}"
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
         
-      - name: Push to calrepo
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
-        run: |
-          pkgFileName=$(ls *.pkg.tar.zst)
-          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
-          findOutput=$(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" | wc -l)
-          [ $findOutput -eq 0 ] && msg="Add" || msg="Update"
-          while read -r -d '' file; do
-            rm -f "$file"
-          done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
-          mv "$pkgFileName"* calrepo/$arch
-          cd calrepo
-          git config --local user.name "$(git log --format=%an | head -n 1)"
-          git config --local user.email "$(git log --format=%ae | head -n 1)"
-          gitStatus="$(git status --porcelain)"
-          if [ ! -z "$gitStatus" ]; then
-            git pull
-            git add .
-            git commit -m "$msg ${{ env.pkgName }}"
-            git push
-          fi
+            #      - name: Push to calrepo
+            #        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
+            #        run: |
+            #          pkgFileName=$(ls *.pkg.tar.zst)
+            #          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
+            #          findOutput=$(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" | wc -l)
+            #          [ $findOutput -eq 0 ] && msg="Add" || msg="Update"
+            #          while read -r -d '' file; do
+            #            rm -f "$file"
+            #          done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
+            #          mv "$pkgFileName"* calrepo/$arch
+            #          cd calrepo
+            #          git config --local user.name "$(git log --format=%an | head -n 1)"
+            #          git config --local user.email "$(git log --format=%ae | head -n 1)"
+            #          gitStatus="$(git status --porcelain)"
+            #          if [ ! -z "$gitStatus" ]; then
+            #            git pull
+            #            git add .
+            #            git commit -m "$msg ${{ env.pkgName }}"
+            #            git push
+            #          fi
        
       - name: Push .SRCINFO
         if: ${{ env.cancelJob == 'false' }}
