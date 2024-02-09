@@ -2,8 +2,8 @@
 
 _pkgname="paisa"
 pkgname="${_pkgname}-bin"
-pkgver=0.6.2
-pkgrel=2
+pkgver=0.6.5
+pkgrel=1
 pkgdesc="Personal Finance Manager."
 arch=("x86_64")
 url="https://github.com/ananthakumaran/paisa"
