@@ -1,6 +1,6 @@
 # Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
 
-pkgname="paisa"
+pkgname="pdfjumbler"
 pkgver=0.4.0
 pkgrel=2
 pkgdesc="A simple tool to rearrange/merge/delete/rotate pages from PDF files."
