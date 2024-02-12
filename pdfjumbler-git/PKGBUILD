@@ -10,7 +10,7 @@ url="https://github.com/mgropp/pdfjumbler"
 license=('GPL3')
 _javaver=11
 depends=("java-runtime>=${_javaver}")
-makedepends=("java-environment>=${_javaver}" 'gradle')
+makedepends=("git" "java-environment>=${_javaver}" 'gradle')
 provides=("pdfjumbler")
 conflicts=("pdfjumbler")
 source=("git+${url}.git"
