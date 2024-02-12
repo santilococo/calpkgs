@@ -37,7 +37,7 @@ jobs:
       
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | grep -q "${{ env.pkgName }}" || echo "cancelJob=true" >> $GITHUB_ENV
+          git diff --name-only HEAD HEAD^ | cut -d$'/' -f1 | grep -q "^${{ env.pkgName }}$" || echo "cancelJob=true" >> $GITHUB_ENV
           msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
           echo "msg=$msg" >> $GITHUB_ENV
       
