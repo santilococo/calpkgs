@@ -18,5 +18,5 @@ sha256sums=('551b29996f6e4e4aeedf8b9cf18ef42dcdd467948b7e6a72cd5711a619efd18d'
 package() {
 	install -Dm755 "${pkgname}-${pkgver}.jar" "$pkgdir/usr/share/java/${pkgname}/${pkgname}.jar"
 	install -Dm755 "${pkgname}.sh" "$pkgdir/usr/bin/${pkgname}"
-    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${{pkgname}}"
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 }
