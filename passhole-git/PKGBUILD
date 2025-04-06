@@ -1,0 +1,25 @@
+# Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
+
+_pkgname="passhole"
+pkgname="${_pkgname}-git"
+pkgver=r211.bf6e189
+pkgrel=1
+pkgdesc="KeePass CLI + dmenu interface"
+arch=("any")
+url="https://gitlab.com/slococo/passhole"
+makedepends=("python-setuptools" "git")
+depends=("python-pynput" "python-pykeepass" "python-colorama" "python-pyotp" )
+provides=("passhole")
+conflicts=("passhole")
+source=("git+${url}.git")
+sha256sums=("SKIP")
+
+pkgver() {
+    cd "${srcdir}/${_pkgname}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+    cd "${srcdir}/${_pkgname}"
+    python setup.py install --root="$pkgdir/" --optimize=1
+}
