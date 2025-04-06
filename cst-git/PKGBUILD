@@ -8,7 +8,6 @@ pkgdesc="Heavily-patched build of st terminal."
 arch=('x86_64')
 url="https://gitlab.com/santilococo/cst"
 license=('MIT')
-depends=("libxft-bgra")
 makedepends=("ncurses" "libxext" "git")
 provides=('st')
 conflicts=('st')
