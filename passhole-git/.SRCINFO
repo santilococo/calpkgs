@@ -1,0 +1,18 @@
+pkgbase = passhole-git
+	pkgdesc = KeePass CLI + dmenu interface
+	pkgver = r211.bf6e189
+	pkgrel = 1
+	url = https://gitlab.com/slococo/passhole
+	arch = any
+	makedepends = python-setuptools
+	makedepends = git
+	depends = python-pynput
+	depends = python-pykeepass
+	depends = python-colorama
+	depends = python-pyotp
+	provides = passhole
+	conflicts = passhole
+	source = git+https://gitlab.com/slococo/passhole.git
+	sha256sums = SKIP
+
+pkgname = passhole-git
