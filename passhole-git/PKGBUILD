@@ -2,13 +2,15 @@
 
 _pkgname="passhole"
 pkgname="${_pkgname}-git"
-pkgver=r211.bf6e189
+pkgver=r212.5fe6ee9
 pkgrel=1
 pkgdesc="KeePass CLI + dmenu interface"
 arch=("any")
 url="https://gitlab.com/slococo/passhole"
+license=("GPL")
+_pydeps=("pynput" "pykeepass" "colorama" "pyotp")
+depends=("python" ${_pydeps[@]/#/python-})
 makedepends=("python-setuptools" "git")
-depends=("python-pynput" "python-pykeepass" "python-colorama" "python-pyotp" )
 provides=("passhole")
 conflicts=("passhole")
 source=("git+${url}.git")
@@ -22,4 +24,5 @@ pkgver() {
 package() {
     cd "${srcdir}/${_pkgname}"
     python setup.py install --root="$pkgdir/" --optimize=1
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
 }
