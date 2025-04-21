@@ -50,7 +50,7 @@ jobs:
             rm -f "$file"
           done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
           mv "$pkgFileName"* calrepo/$arch
-          git clone "https://git-ssh-token:${{ secret.GIT_TOKEN }}@git.slc.ar/slococo/calrepo.git"
+          git clone "https://git-ssh-token:${{ secrets.GIT_TOKEN }}@git.slc.ar/slococo/calrepo.git"
           cd calrepo
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
