@@ -2,7 +2,7 @@
 
 _pkgname="passhole"
 pkgname="${_pkgname}-git"
-pkgver=1
+pkgver=r212.5fe6ee9
 pkgrel=1
 pkgdesc="KeePass CLI + dmenu interface"
 arch=("any")
@@ -13,6 +13,7 @@ depends=("python" ${_pydeps[@]/#/python-})
 makedepends=("python-setuptools" "git")
 provides=("passhole")
 conflicts=("passhole")
+# options=('!debug')
 source=("git+${url}.git")
 sha256sums=('SKIP')
 
