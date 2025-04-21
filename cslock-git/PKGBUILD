@@ -6,7 +6,7 @@ pkgver=1.4.r24.g521f3fd
 pkgrel=1
 pkgdesc="Heavily-patched build of slock."
 arch=('x86_64')
-url="https://gitlab.com/santilococo/cslock"
+url="https://gitlab.com/slococo/cslock"
 license=('MIT')
 depends=("libxrandr" "libxinerama" "imlib2" "libxcrypt")
 makedepends=("git")
@@ -17,7 +17,7 @@ sha256sums=('SKIP')
 
 pkgver() {
     cd "${_pkgname}"
-    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
