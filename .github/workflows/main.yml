@@ -24,6 +24,10 @@ jobs:
           inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
           echo "inAur=$inAur" >> $GITHUB_ENV
 
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
       - name: Check modified files
         run: |
           git diff --name-only HEAD HEAD^ | cut -d$'/' -f1 | grep -q "^${{ env.pkgName }}$" || echo "cancelJob=true" >> $GITHUB_ENV
