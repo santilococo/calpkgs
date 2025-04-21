@@ -16,14 +16,14 @@ jobs:
           
           echo "${{ secrets.ENCRYPTION_PASSWORD }}" > password.txt
 
-          openssl enc -aes-256-cbc -salt -in gpg_key.txt -out gpg_key.enc -pass file:./password.txt
-          openssl enc -aes-256-cbc -salt -in gpg_pass.txt -out gpg_pass.enc -pass file:./password.txt
-          GPG_KEY=$(base64 gpg_key.enc | tr -d '\n')
-          GPG_PASS=$(base64 gpg_pass.enc | tr -d '\n')
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in gpg_key.txt -out gpg_key.enc -pass file:./password.txt
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in gpg_pass.txt -out gpg_pass.enc -pass file:./password.txt
+          GPG_KEY=$(base64 -w 0 gpg_key.enc)
+          GPG_PASS=$(base64 -w 0 gpg_pass.enc)
 
           curl -X POST https://webhook.slococo.com.ar/hooks/redeploy-webhook -k \
             -H "Content-Type: application/json" \
-            -d "{\"data\":\"$GPG_KEY\|$GPG_PASS"}"
+            -d "{\"data\":\"$GPG_KEY|$GPG_PASS\"}"
           
       - name: Send hello via HTTP
         uses: fjogeleit/http-request-action@v1
