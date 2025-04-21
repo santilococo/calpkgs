@@ -1,19 +1,19 @@
 pkgbase = cslock-git
 	pkgdesc = Heavily-patched build of slock.
-	pkgver = 1.4.r24.g521f3fd
+	pkgver = r142.95fd982
 	pkgrel = 1
-	url = https://github.com/santilococo/cslock
+	url = https://gitlab.com/slococo/cslock
 	arch = x86_64
 	license = MIT
 	makedepends = git
 	depends = libxrandr
 	depends = libxinerama
-	depends = libxft-bgra
 	depends = imlib2
 	depends = libxcrypt
+	depends = libxft
 	provides = slock
 	conflicts = slock
-	source = git+https://github.com/santilococo/cslock
+	source = git+https://gitlab.com/slococo/cslock
 	sha256sums = SKIP
 
 pkgname = cslock-git
