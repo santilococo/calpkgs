@@ -12,11 +12,16 @@ makedepends=("ncurses" "libxext" "git" "libxft")
 provides=('st')
 conflicts=('st')
 source=("git+${url}")
-sha256sums=('SKIP')
+sha256sums=('SKIP'
+            '37f94adb12e1c536868dfc1913deb92a1fd7f1f194835f0fa715faeaab313bf9')
 
 pkgver() {
     cd "${_pkgname}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    patch --directory="${_pkgname}" --strip=0 < terminfo.patch
 }
 
 build() {
