@@ -2,7 +2,7 @@
 
 _pkgname="cst"
 pkgname="${_pkgname}-git"
-pkgver=0.8.5.r13.gb5940bd
+pkgver=r1165.7c5b8ca
 pkgrel=1
 pkgdesc="Heavily-patched build of st terminal."
 arch=('x86_64')
