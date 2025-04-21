@@ -11,7 +11,8 @@ license=('MIT')
 makedepends=("ncurses" "libxext" "git" "libxft")
 provides=('st')
 conflicts=('st')
-source=("git+${url}")
+source=("git+${url}"
+        "terminfo.patch")
 sha256sums=('SKIP'
             '37f94adb12e1c536868dfc1913deb92a1fd7f1f194835f0fa715faeaab313bf9')
 
