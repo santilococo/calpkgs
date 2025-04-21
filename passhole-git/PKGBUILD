@@ -2,7 +2,7 @@
 
 _pkgname="passhole"
 pkgname="${_pkgname}-git"
-pkgver=r212.5fe6ee9
+pkgver=1
 pkgrel=1
 pkgdesc="KeePass CLI + dmenu interface"
 arch=("any")
