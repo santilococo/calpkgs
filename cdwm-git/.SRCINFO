@@ -10,6 +10,7 @@ pkgbase = cdwm-git
 	depends = libxft
 	provides = dwm
 	conflicts = dwm
+	options = !debug
 	source = git+https://gitlab.com/slococo/cdwm
 	sha256sums = SKIP
 
