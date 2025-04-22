@@ -13,6 +13,7 @@ pkgbase = cslock-git
 	depends = libxft
 	provides = slock
 	conflicts = slock
+	options = !debug
 	source = git+https://gitlab.com/slococo/cslock
 	sha256sums = SKIP
 
