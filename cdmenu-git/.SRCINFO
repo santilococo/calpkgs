@@ -10,6 +10,7 @@ pkgbase = cdmenu-git
 	depends = libxft
 	provides = dmenu
 	conflicts = dmenu
+	options = !debug
 	source = git+https://gitlab.com/slococo/cdmenu
 	sha256sums = SKIP
 
