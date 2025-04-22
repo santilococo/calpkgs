@@ -12,6 +12,7 @@ depends=("libxrandr" "libxinerama" "imlib2" "libxcrypt" "libxft")
 makedepends=("git")
 provides=('slock')
 conflicts=('slock')
+options=('!debug')
 source=("git+${url}")
 sha256sums=('SKIP')
 

@@ -13,7 +13,7 @@ depends=("python" ${_pydeps[@]/#/python-})
 makedepends=("python-setuptools" "git")
 provides=("passhole")
 conflicts=("passhole")
-# options=('!debug')
+options=('!debug')
 source=("git+${url}.git")
 sha256sums=('SKIP')
 

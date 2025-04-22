@@ -12,6 +12,7 @@ depends=("libxinerama" "libxft")
 makedepends=("git")
 provides=('dmenu')
 conflicts=('dmenu')
+options=('!debug')
 source=("git+${url}")
 sha256sums=('SKIP')
 
