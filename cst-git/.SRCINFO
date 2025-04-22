@@ -11,6 +11,7 @@ pkgbase = cst-git
 	makedepends = libxft
 	provides = st
 	conflicts = st
+	options = !debug
 	source = git+https://gitlab.com/slococo/cst
 	source = terminfo.patch
 	sha256sums = SKIP
