@@ -28,7 +28,7 @@ prepare() {
 }
 
 package() {
-    depends=('rsync' 'librewolf')
+    depends=('rsync' 'librewolf-bin')
     install -Dm 755 "${pkgname}".sh "${pkgdir}/usr/bin/${pkgname}"
     install -Dm 644 {"${srcdir}","${pkgdir}"/usr/lib/systemd/user}/"${pkgname}".service
     install -Dm 644 {"${srcdir}","${pkgdir}"/usr/lib/systemd/user}/"${pkgname}-cron".service
