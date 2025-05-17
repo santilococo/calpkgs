@@ -1,0 +1,18 @@
+# Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
+
+pkgname=grub-update-hook
+pkgver=20250517
+pkgrel=1
+pkgdesc="Pacman hook to update GRUB after a kernel update."
+arch=('any')
+url='https://wiki.archlinux.org/title/GRUB#Warning_to_perform_grub-install/grub-mkconfig_at_each_grub_update'
+license=('GPL')
+depends=('grub')
+_hookname="${pkgname%-hook}.hook"
+source=("${_hookname}")
+sha256sums=('4dfddd46ca0c68e1cd7247e98ee75bef91a6946ae3cde514aff86f6edac0cffe')
+
+package() {
+    install -Dm 755 "${_hookname}" "${pkgdir}/etc/pacman.d/hooks/${_hookname}"
+}
+
