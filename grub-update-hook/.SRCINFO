@@ -1,0 +1,12 @@
+pkgbase = grub-update-hook
+	pkgdesc = Pacman hook to update GRUB after a kernel update.
+	pkgver = 20250517
+	pkgrel = 1
+	url = https://wiki.archlinux.org/title/GRUB#Warning_to_perform_grub-install/grub-mkconfig_at_each_grub_update
+	arch = any
+	license = GPL
+	depends = grub
+	source = grub-update.hook
+	sha256sums = 4dfddd46ca0c68e1cd7247e98ee75bef91a6946ae3cde514aff86f6edac0cffe
+
+pkgname = grub-update-hook
