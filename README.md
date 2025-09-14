@@ -12,5 +12,5 @@ PRs are welcome.
 ## License <a name="license"></a>
 [MIT](https://raw.githubusercontent.com/santilococo/calpkgs/master/LICENSE.md)
 
-[1]: https://aur.archlinux.org/packages/?K=santilococo&SeB=m
+[1]: https://aur.archlinux.org/packages/?K=slococo&SeB=m
 [2]: https://github.com/santilococo/calrepo
