@@ -11,11 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgInfo: ['zaread-git|N', 'holehe-git|Y', 'onivim2-bin|Y', 'cst-git|N', 'cdwm-git|N', 'librewolf-sync|Y',
-                  'cslock-git|N', 'cdmenu-git|N', 'pvs-studio|N', 'knock-git|N', 'hakrawler-git|Y', 'bashmount|Y', 
-                  'bashmount-git|Y', 'firefox-sync|Y', 'pdd-git|Y', 'onivim2-nightly-bin|Y', 'python-isr-git|Y', 
-                  'repostat-git|Y', 'python-upnpclient|Y', 'imgur.sh|Y', 'vidmerger-bin|Y', 'vidmerger-git|Y',
-                  'paisa-git|Y', 'paisa-bin|Y', 'pdfjumbler|Y', 'pdfjumbler-git|Y', 'passhole-git|N', 'grub-update-hook|N']
+        pkgInfo: [
+          'zaread-git|N', 'holehe-git|Y', 'onivim2-bin|Y', 'cst-git|N', 'cdwm-git|N', 'librewolf-sync|Y',
+          'cslock-git|N', 'cdmenu-git|N', 'pvs-studio|N', 'knock-git|N', 'hakrawler-git|Y', 'bashmount|Y', 
+          'bashmount-git|Y', 'firefox-sync|Y', 'pdd-git|Y', 'onivim2-nightly-bin|Y', 'python-isr-git|Y', 
+          'repostat-git|Y', 'python-upnpclient|Y', 'vidmerger-bin|Y', 'vidmerger-git|Y', 'paisa-git|Y',
+          'paisa-bin|Y', 'pdfjumbler|Y', 'pdfjumbler-git|Y', 'passhole-git|N', 'grub-update-hook|N'
+        ]
     steps:
       - name: Set env variables
         run: |
