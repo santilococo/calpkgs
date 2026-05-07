@@ -1,5 +1,3 @@
-# Maintainer: Santiago Lo Coco <mail at slococo dot com dot ar>
-
 pkgname="python-upnpclient"
 pkgver=1.0.3
 pkgrel=1
