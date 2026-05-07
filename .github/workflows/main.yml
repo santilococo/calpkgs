@@ -26,7 +26,7 @@ jobs:
           inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
           echo "inAur=$inAur" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
