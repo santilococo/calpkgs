@@ -78,7 +78,7 @@ jobs:
       - name: Push to AUR
         if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
         env:
-          AUR_SSH_KEY: "${{ secrets.AUR_SSH_KEY }}"
+          AUR_SSH_KEY: ${{ secrets.AUR_SSH_KEY }}
           AUR_SSH_PASSPHRASE: ${{ secrets.AUR_SSH_PASSPHRASE }}
         run: |
           [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
