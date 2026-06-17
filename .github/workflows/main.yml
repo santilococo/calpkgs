@@ -46,7 +46,7 @@ jobs:
           echo "msg=$msg" >> $GITHUB_ENV
 
       - name: Build package and output .SRCINFO
-        if: ${cancelJob} == 'false'
+        if: ${{ env.cancelJob == 'false' }}
         uses: santilococo/calbuilder@master
         with:
           pkgDir: "${{ env.pkgName }}"
@@ -55,7 +55,7 @@ jobs:
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
 
       - name: Push .SRCINFO
-        if: ${cancelJob} == 'false'
+        if: ${{ env.cancelJob == 'false' }}
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
@@ -76,7 +76,7 @@ jobs:
           fi
 
       - name: Push to AUR
-        if: ${cancelJob} == 'false' && ${inAur} == 'Y'
+        if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
         env:
           AUR_SSH_KEY: "${{ secrets.AUR_SSH_KEY }}"
           AUR_SSH_PASSPHRASE: ${{ secrets.AUR_SSH_PASSPHRASE }}
