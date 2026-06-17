@@ -3,6 +3,7 @@ name: CI
 on: [push, workflow_dispatch]
 
 permissions:
+  metadata: read
   contents: write
 
 defaults:
