@@ -29,11 +29,12 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 2
+          persist-credentials: false
 
       - name: Check modified files
         run: |
-          git diff --name-only HEAD HEAD^ | cut -d$'/' -f1 | grep -q "^${{ env.pkgName }}$" || echo "cancelJob=true" >> $GITHUB_ENV
-          msg="Update" && [ -f "${{ env.pkgName }}/.SRCINFO" ] || msg="Add"
+          git diff --name-only HEAD HEAD^ | cut -d$'/' -f1 | grep -q "^${pkgName}$" || echo "cancelJob=true" >> $GITHUB_ENV
+          msg="Update" && [ -f "${pkgName}/.SRCINFO" ] || msg="Add"
           echo "msg=$msg" >> $GITHUB_ENV
 
       - name: Build package and output .SRCINFO
@@ -50,12 +51,12 @@ jobs:
         run: |
           git clone "https://git-ssh-token:${{ secrets.GIT_TOKEN }}@git.slc.ar/slococo/calrepo.git"
           pkgFileName=$(ls *.pkg.tar.zst)
-          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${{ env.pkgName }}/PKGBUILD")"
-          findOutput=$(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" | wc -l)
+          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${pkgName}/PKGBUILD")"
+          findOutput=$(find -H "calrepo/$arch" -regex ".*${pkgName}.*" | wc -l)
           [ $findOutput -eq 0 ] && msg="Add" || msg="Update"
           while read -r -d '' file; do
             rm -f "$file"
-          done < <(find -H "calrepo/$arch" -regex ".*${{ env.pkgName }}.*" -print0)
+          done < <(find -H "calrepo/$arch" -regex ".*${pkgName}.*" -print0)
           mv "$pkgFileName"* calrepo/$arch
           cd calrepo
           git config --local user.name "$(git log --format=%an | head -n 1)"
@@ -64,7 +65,7 @@ jobs:
           if [ ! -z "$gitStatus" ]; then
             git pull
             git add .
-            git commit -m "$msg ${{ env.pkgName }}"
+            git commit -m "$msg ${pkgName}"
             git push
           fi
 
@@ -73,17 +74,17 @@ jobs:
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
-          mv .SRCINFO "${{ env.pkgName }}"
+          mv .SRCINFO "${pkgName}"
           gitStatus="$(git status --porcelain)"
           if [ ! -z "$gitStatus" ]; then
             git pull
             if echo "$gitStatus" | grep -q "PKGBUILD"; then
-              git add "${{ env.pkgName }}/PKGBUILD"
-              git commit -m "Bump ${{ env.pkgName }} version"
+              git add "${pkgName}/PKGBUILD"
+              git commit -m "Bump ${pkgName} version"
             fi
             if echo "$gitStatus" | grep -q ".SRCINFO"; then 
-              git add "${{ env.pkgName }}/.SRCINFO"
-              git commit -m "${{ env.msg }} ${{ env.pkgName }}/.SRCINFO"
+              git add "${pkgName}/.SRCINFO"
+              git commit -m "${msg} ${pkgName}/.SRCINFO"
               echo "srcModified=true" >> $GITHUB_ENV
             fi
             git push
@@ -109,15 +110,15 @@ jobs:
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
-          git checkout --orphan ${{ env.pkgName }}
+          git checkout --orphan ${pkgName}
           git rm -rf .
-          git remote add ${{ env.pkgName }} ssh://aur@aur.archlinux.org/${{ env.pkgName }}.git
-          set +e; git pull ${{ env.pkgName }} master; set -e
-          git checkout master ${{ env.pkgName }}
-          find ${{ env.pkgName }} -mindepth 1 -maxdepth 1 -exec mv {} . \;
+          git remote add ${pkgName} ssh://aur@aur.archlinux.org/${pkgName}.git
+          set +e; git pull ${pkgName} master; set -e
+          git checkout master ${pkgName}
+          find ${pkgName} -mindepth 1 -maxdepth 1 -exec mv {} . \;
           rm -rf *.zst* pkg src calrepo
           if [ ! -z "$(git status --porcelain)" ]; then
             git add .
             git commit -m "$msg"
-            git push --set-upstream ${{ env.pkgName }} ${{ env.pkgName }}:master
+            git push --set-upstream ${pkgName} ${pkgName}:master
           fi
