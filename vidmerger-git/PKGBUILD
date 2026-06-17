@@ -2,7 +2,7 @@
 
 _pkgname=vidmerger
 pkgname="${_pkgname}-git"
-pkgver=r292.b02f60b
+pkgver=r292.b02f60a
 pkgrel=1
 pkgdesc="Merge video and audio files via CLI."
 arch=('x86_64')
