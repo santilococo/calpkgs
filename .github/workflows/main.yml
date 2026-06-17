@@ -2,9 +2,8 @@ name: CI
 
 on: [push, workflow_dispatch]
 
-# permissions:
-#   metadata: read
-#   contents: write
+permissions:
+  contents: write
 
 defaults:
   run:
@@ -27,8 +26,6 @@ jobs:
           'paisa-bin|Y', 'pdfjumbler|Y', 'pdfjumbler-git|Y', 'passhole-git|N', 'grub-update-hook|N'
         ]
     steps:
-      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
-
       - name: Set env variables
         env:
           PKGINFO: ${{ matrix.pkgInfo }}
@@ -41,7 +38,6 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 2
-          persist-credentials: false
 
       - name: Check modified files
         run: |
