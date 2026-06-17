@@ -1,6 +1,12 @@
 name: CI
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, workflow_dispatch]
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   allPackages:
@@ -106,7 +112,7 @@ jobs:
           ssh-add $HOME/.ssh/aur
           
           git pull
-          msg="$(git log --format=%s | sed -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
+          msg="$(git log --format=%s | sed --sandbox -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
