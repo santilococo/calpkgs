@@ -2,7 +2,7 @@ name: CI
 
 on: [push, workflow_dispatch]
 
-permissions: {}
+# permissions: {}
 
 defaults:
   run:
@@ -27,7 +27,8 @@ jobs:
     steps:
       - name: Set env variables
         env:
-          PKGINFO: "${{ matrix.pkgInfo }}"
+          PKGINFO: ${{ matrix.pkgInfo }}
+          AUR_SSH_PASSPHRASE: ${{ secrets.AUR_SSH_PASSPHRASE }}
         run: |
           pkgName=$(echo "${PKGINFO}" | cut -d$'|' -f1)
           echo "pkgName=$pkgName" >> $GITHUB_ENV
