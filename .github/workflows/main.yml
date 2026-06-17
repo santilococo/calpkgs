@@ -26,10 +26,12 @@ jobs:
         ]
     steps:
       - name: Set env variables
+        env:
+          PKGINFO: "${{ matrix.pkgInfo }}"
         run: |
-          pkgName=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f1)
+          pkgName=$(echo "${PKGINFO}" | cut -d$'|' -f1)
           echo "pkgName=$pkgName" >> $GITHUB_ENV
-          inAur=$(echo "${{ matrix.pkgInfo }}" | cut -d$'|' -f2)
+          inAur=$(echo "${PKGINFO}" | cut -d$'|' -f2)
           echo "inAur=$inAur" >> $GITHUB_ENV
 
       - uses: actions/checkout@v6
@@ -44,7 +46,7 @@ jobs:
           echo "msg=$msg" >> $GITHUB_ENV
 
       - name: Build package and output .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+        if: ${cancelJob} == 'false'
         uses: santilococo/calbuilder@master
         with:
           pkgDir: "${{ env.pkgName }}"
@@ -52,31 +54,8 @@ jobs:
           gpgPrivateKey: "${{ secrets.GPG_PRIVATE_KEY }}"
           gpgPassphrase: "${{ secrets.GPG_PASSPHRASE }}"
 
-      - name: Push to calrepo
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'N' }}
-        run: |
-          git clone "https://git-ssh-token:${{ secrets.GIT_TOKEN }}@git.slc.ar/slococo/calrepo.git"
-          pkgFileName=$(ls *.pkg.tar.zst)
-          arch="$(grep -oP '(?<=arch=\(.).*?(?=.\))' "${pkgName}/PKGBUILD")"
-          findOutput=$(find -H "calrepo/$arch" -regex ".*${pkgName}.*" | wc -l)
-          [ $findOutput -eq 0 ] && msg="Add" || msg="Update"
-          while read -r -d '' file; do
-            rm -f "$file"
-          done < <(find -H "calrepo/$arch" -regex ".*${pkgName}.*" -print0)
-          mv "$pkgFileName"* calrepo/$arch
-          cd calrepo
-          git config --local user.name "$(git log --format=%an | head -n 1)"
-          git config --local user.email "$(git log --format=%ae | head -n 1)"
-          gitStatus="$(git status --porcelain)"
-          if [ ! -z "$gitStatus" ]; then
-            git pull
-            git add .
-            git commit -m "$msg ${pkgName}"
-            git push
-          fi
-
       - name: Push .SRCINFO
-        if: ${{ env.cancelJob == 'false' }}
+        if: ${cancelJob} == 'false'
         run: |
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
@@ -97,22 +76,23 @@ jobs:
           fi
 
       - name: Push to AUR
-        if: ${{ env.cancelJob == 'false' && env.inAur == 'Y' }}
+        if: ${cancelJob} == 'false' && ${inAur} == 'Y'
+        env:
+          AUR_SSH_KEY: "${{ secrets.AUR_SSH_KEY }}"
+          AUR_SSH_PASSPHRASE: ${{ secrets.AUR_SSH_PASSPHRASE }}
         run: |
           [ ! -d $HOME/.ssh ] && mkdir -m 0700 $HOME/.ssh
           ssh-keyscan -H aur.archlinux.org > $HOME/.ssh/known_hosts
-          echo "${{ secrets.AUR_SSH_KEY }}" > $HOME/.ssh/aur
+          echo "${AUR_SSH_KEY}" > $HOME/.ssh/aur
           chmod 0600 $HOME/.ssh/aur
-          ssh-keygen -vy -f $HOME/.ssh/aur -P ${{ secrets.AUR_SSH_PASSPHRASE }} > $HOME/.ssh/aur.pub
+          ssh-keygen -vy -f $HOME/.ssh/aur -P ${AUR_SSH_PASSPHRASE} > $HOME/.ssh/aur.pub
           chmod 0644 $HOME/.ssh/aur.pub
-          # ls -al $HOME
-          # ls -al $HOME/.ssh
           eval $(ssh-agent)
-          ssh-keygen -p -P "${{ secrets.AUR_SSH_PASSPHRASE }}" -N "" -f $HOME/.ssh/aur
+          ssh-keygen -p -P "${AUR_SSH_PASSPHRASE}" -N "" -f $HOME/.ssh/aur
           ssh-add $HOME/.ssh/aur
           
           git pull
-          msg="$(git log --format=%s | sed --sandbox -n 2p)" && [ ${{ env.srcModified }} = true ] || msg="$(git log --format=%s | head -n 1)"
+          msg="$(git log --format=%s | sed --sandbox -n 2p)" && [ ${srcModified} = true ] || msg="$(git log --format=%s | head -n 1)"
           git config --local user.name "$(git log --format=%an | head -n 1)"
           git config --local user.email "$(git log --format=%ae | head -n 1)"
           
