@@ -35,7 +35,7 @@ jobs:
           inAur=$(echo "${PKGINFO}" | cut -d$'|' -f2)
           echo "inAur=$inAur" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 2
 
